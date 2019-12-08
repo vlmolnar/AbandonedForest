@@ -33,6 +33,22 @@ class Player{
     return flipped;
  }
  
+ boolean collisionCheck(PVector pos, Room room) {
+   int gridX, gridY;
+   gridX = round((room.halfScale.x + pos.x - room.loc.x)/ GRID_SQUARE);
+   gridY = round((room.halfScale.y + pos.y - room.loc.y)/ GRID_SQUARE);
+   if (gridX > 35) gridX = 35;  // Prevents array out of bounds but allows 0 value
+   if (gridY > 19) gridY = 19;
+   //if (gridX < 0) gridX = 0;
+   //if (gridY < 0) gridY = 0;
+   System.out.println("pos: " + pos.x + "  " + pos.y);
+   System.out.println("room: " + room.loc.x + "  " + room.loc.y);
+   System.out.println("grid: " + gridX + "  " + gridY);
+   if (room.grid[gridY][gridX] == 1) return true;
+   return false;
+ }
+ 
+ 
  void move(boolean[] pressed, int leftKey, int rightKey, int upKey, int downKey) {
    if (pressed[leftKey]) {
      faceRight = false;
@@ -56,17 +72,21 @@ class Player{
      }
      moveInput(1, 0);
    }
-   this.position = new PVector(this.position.x + this.velocity.x, this.position.y + this.velocity.y);
-   this.velocity.mult(0.85);
+   PVector futurePos = new PVector(this.position.x + this.velocity.x, this.position.y + this.velocity.y);
+   if (!collisionCheck(futurePos, dungeon.getRoom(position))) {
+     this.position = futurePos;
+     this.velocity.mult(0.85);
+   } else {
+     this.velocity = new PVector(0,0);
+   }
+   
+   //gravity
+   //if (!collisionCheck(futurePos, dungeon.getRoom(position))) {
+   //  this.velocity.add(0, -0.5);
+   //}
  }
  
  void moveInput(float moveX, float moveY) {
-   if (velocity.mag() < 6) {
-    this.velocity.add(new PVector(moveX, moveY));
-   }
- }
- 
- void moveInput(int moveX, int moveY) {
    if (velocity.mag() < 6) {
     this.velocity.add(new PVector(moveX, moveY));
    }
