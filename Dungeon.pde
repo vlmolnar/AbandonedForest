@@ -10,7 +10,7 @@ static class Dungeon {
   final PVector max = new PVector();
   final PVector min = new PVector();
   final Random rng = new Random();
-  final Room start = new Room();
+  final Room start = new Room(map1);
   final NavigableMap < Coord, Room > rooms = new TreeMap < Coord, Room > ();
 
   Dungeon(long seed, int count, float w, float h) {
@@ -33,7 +33,7 @@ static class Dungeon {
 
     // Run through values of map, draw room.
     for (Room room : rooms.values()) {
-      room.draw(r);
+      room.drawRoom(r);
     }
     r.popStyle();
   }
@@ -71,7 +71,7 @@ static class Dungeon {
       }
 
       // Once a unique coordinate is set, add new room.
-      rooms.put(curr, new Room());
+      rooms.put(curr, new Room(map0));
 
       // Update min and max coordinates.
       minx = min(minx, curr.x);

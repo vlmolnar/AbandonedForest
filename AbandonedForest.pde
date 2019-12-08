@@ -5,6 +5,7 @@ Player player;
 Dungeon dungeon;
 DungeonCam cam;
 PGraphics2D renderer;
+final static int GRID_SQUARE = 50;  //50 pixels, height/36, width/20
 
 void setup() {
   //fullScreen(P2D);
@@ -15,9 +16,9 @@ void setup() {
   renderer = (PGraphics2D)g;
   cam = new DungeonCam(renderer);
   dungeon = new Dungeon(System.currentTimeMillis(),
-    roomCount, width, height);
-    
+    roomCount, width, height);  
   player = new Player(dungeon.start.loc.x, dungeon.start.loc.y, 0, 0);
+  
 }
 
 void draw() {
@@ -27,6 +28,13 @@ void draw() {
   dungeon.draw(renderer);
   player.drawPlayer();
   surface.setTitle(String.format("%.1f", frameRate));
+  //for (int i = -1 * (width/2); i < width/2; i+=50) {
+  //  line(i, -1 * (height/2), i, height/2);
+  //}
+  //for (int i = -1 * (height/2); i < height/2; i+=50) {
+  //  line(-1 * (width/2), i, width/2, i);
+  //}
+    
 }
 
 void keyPressed() {
