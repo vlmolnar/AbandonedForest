@@ -71,7 +71,7 @@ static class Dungeon {
       }
 
       // Once a unique coordinate is set, add new room.
-      rooms.put(curr, new Room(map0));
+      rooms.put(curr, new Room(map1));
 
       // Update min and max coordinates.
       minx = min(minx, curr.x);

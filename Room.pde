@@ -28,7 +28,7 @@ static class Room {
     //r.vertex(loc.x - halfScale.x, loc.y + halfScale.y - GRID_SQUARE);
     //r.endShape(CLOSE);
     
-    r.fill(255, 255, 255);
+    r.fill(0);
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid[0].length; j++) {
         if (grid[i][j] == 1) {
@@ -43,13 +43,13 @@ static class Room {
       }
     }
 
-    
-    //for (float i = loc.x - halfScale.x; i < loc.x + halfScale.x; i+=50) {
-    //  r.line(i,loc.y - halfScale.y, i, loc.y + halfScale.y);
-    //}
-    //for (float i = loc.y - halfScale.y; i < loc.y + halfScale.y; i+=50) {
-    //  r.line(loc.x - halfScale.x, i, loc.x + halfScale.x, i);
-    //}
+    //r.fill(255, 255, 255);
+    for (float i = loc.x - halfScale.x; i < loc.x + halfScale.x; i+=50) {
+      r.line(i,loc.y - halfScale.y, i, loc.y + halfScale.y);
+    }
+    for (float i = loc.y - halfScale.y; i < loc.y + halfScale.y; i+=50) {
+      r.line(loc.x - halfScale.x, i, loc.x + halfScale.x, i);
+    }
     r.fill(fill);
   }
 }

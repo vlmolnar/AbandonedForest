@@ -33,17 +33,33 @@ class Player{
     return flipped;
  }
  
- boolean collisionCheck(PVector pos, Room room) {
+ boolean collisionCheck(PVector pos) {
+   // Other 3 corners of player sprite
+   PVector pos2 = new PVector(pos.x + foxImg.width, pos.y);
+   PVector pos3 = new PVector(pos.x + foxImg.width, pos.y + foxImg.height);
+   PVector pos4 = new PVector(pos.x, pos.y + foxImg.height);
+   
+   // Mid-point in player sprite across x axis, because sprite is wider than a block
+   PVector pos5 = new PVector(pos.x + foxImg.width/2, pos.y);;
+   PVector pos6 = new PVector(pos.x + foxImg.width/2, pos.y + foxImg.height);
+   
+   // Collision
+   return pointCollision(pos, dungeon.getRoom(pos)) || pointCollision(pos2, dungeon.getRoom(pos2))
+       || pointCollision(pos3, dungeon.getRoom(pos3)) || pointCollision(pos4, dungeon.getRoom(pos4))
+       || pointCollision(pos5, dungeon.getRoom(pos5)) || pointCollision(pos6, dungeon.getRoom(pos6));
+ }
+ 
+ boolean pointCollision(PVector pos, Room room) {
    int gridX, gridY;
-   gridX = round((room.halfScale.x + pos.x - room.loc.x)/ GRID_SQUARE);
-   gridY = round((room.halfScale.y + pos.y - room.loc.y)/ GRID_SQUARE);
+   gridX = (int)(pos.x + room.halfScale.x - room.loc.x)/ GRID_SQUARE;
+   gridY = 19 - (int)(pos.y + room.halfScale.y - room.loc.y)/ GRID_SQUARE; // Compensates for flipped y axis
    if (gridX > 35) gridX = 35;  // Prevents array out of bounds but allows 0 value
    if (gridY > 19) gridY = 19;
-   //if (gridX < 0) gridX = 0;
-   //if (gridY < 0) gridY = 0;
-   System.out.println("pos: " + pos.x + "  " + pos.y);
-   System.out.println("room: " + room.loc.x + "  " + room.loc.y);
-   System.out.println("grid: " + gridX + "  " + gridY);
+   if (gridX < 0) gridX = 0;  // Prevents array out of bounds but allows 0 value
+   if (gridY < 0) gridY = 0;
+   //System.out.println("pos: " + pos.x + "  " + pos.y);
+   //System.out.println("room: " + room.loc.x + "  " + room.loc.y);
+   //System.out.println("grid: " + gridX + "  " + gridY);
    if (room.grid[gridY][gridX] == 1) return true;
    return false;
  }
@@ -73,7 +89,7 @@ class Player{
      moveInput(1, 0);
    }
    PVector futurePos = new PVector(this.position.x + this.velocity.x, this.position.y + this.velocity.y);
-   if (!collisionCheck(futurePos, dungeon.getRoom(position))) {
+   if (!collisionCheck(futurePos)) {
      this.position = futurePos;
      this.velocity.mult(0.85);
    } else {
