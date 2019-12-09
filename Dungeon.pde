@@ -48,10 +48,11 @@ static class Dungeon {
     rooms.put(curr, start);
 
     // Set random number generator to seed.
-    this.seed = seed;
-    rng.setSeed(this.seed);
-    println("Dungeon seed:", this);
+    //this.seed = seed;
+    //rng.setSeed(this.seed);
+    //println("Dungeon seed:", this);
 
+    /*
     // To store dungeon minimums and maximums.
     int minx = 0; int miny = 0;
     int maxx = 0; int maxy = 0;
@@ -69,9 +70,11 @@ static class Dungeon {
         // (-1, 0) or (0, -1) away.
         curr = Coord.add(curr, Coord.random(rng));
       }
-
+      */
+      
+      curr = Coord.add(curr, new Coord(1, 0));
       // Once a unique coordinate is set, add new room.
-      rooms.put(curr, new Room(map1));
+      rooms.put(curr, new Room(map0));
 
       // Update min and max coordinates.
       minx = min(minx, curr.x);
@@ -108,6 +111,74 @@ static class Dungeon {
       room.halfScale.set(halfw, halfh);
     }
     return rooms;
+    
+    //// Create a default room located at (0, 0).
+    //// Reset rooms map and add origin.
+    //rooms.clear();
+    //Coord curr = new Coord(0, 0);
+    //rooms.put(curr, start);
+
+    //// Set random number generator to seed.
+    ////this.seed = seed;
+    ////rng.setSeed(this.seed);
+    ////println("Dungeon seed:", this);
+
+    //// To store dungeon minimums and maximums.
+    //int minx = 0; int miny = 0;
+    //int maxx = 0; int maxy = 0;
+
+    //// Start room has already been determined, so
+    //// loop for one less room than count.
+    //for (int i = 0; i < count - 1; ++i) {
+
+    //  // Take a random walk. Prevent a room that has
+    //  // already been added at a coordinate from being
+    //  // added again to the map.
+    //  while (rooms.containsKey(curr)) {
+
+    //    // Get a random coordinate, either (1, 0), (0, 1),
+    //    // (-1, 0) or (0, -1) away.
+    //    curr = Coord.add(curr, Coord.random(rng));
+    //  }
+
+    //  // Once a unique coordinate is set, add new room.
+    //  rooms.put(curr, new Room(map1));
+
+    //  // Update min and max coordinates.
+    //  minx = min(minx, curr.x);
+    //  miny = min(miny, curr.y);
+    //  maxx = max(maxx, curr.x);
+    //  maxy = max(maxy, curr.y);
+    //}
+
+    //// Set room dimensions. invDim will be used to find
+    //// appropriate room by coordinate given a vector.
+    //float halfw = w * 0.5; float halfh = h * 0.5;
+    //invDim.set(1.0 / w, 1.0 / h, 0.0);
+
+    //// Find dungeon extents.
+    //min.set(minx * w, miny * h);
+    //min.sub(halfw, halfh);
+    //max.set(maxx * w, maxy * h);
+    //max.add(halfw, halfh);
+
+    //// Each entry in a map is a key-value pair. To loop over
+    //// all entries of a map, we acquire a set of entries.
+    //Set < NavigableMap.Entry < Coord, Room > > entries = rooms.entrySet();
+    //for (NavigableMap.Entry < Coord, Room > entry : entries) {
+
+    //  // Get key and value from entry.
+    //  Coord coord = entry.getKey();
+    //  Room room = entry.getValue();
+
+    //  // Set fill color, location and half scale.
+    //  room.fill = lerpColor(
+    //    0xffef3f3f, 0xff3f3fef,
+    //    rng.nextFloat(), HSB);
+    //  room.loc.set(coord.x * w, coord.y * h);
+    //  room.halfScale.set(halfw, halfh);
+    //}
+    //return rooms;
   }
 
   Room getRoom(PVector in) {    

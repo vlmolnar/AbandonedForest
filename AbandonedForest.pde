@@ -22,7 +22,7 @@ void setup() {
 }
 
 void draw() {
-  player.move(pressed, 65, 68, 87, 83);
+  player.move(pressed, 65, 68, 87, 83, 81, 69); //keys a, d, w, s, q, e
   cam.lookAt(dungeon, player.position, pressed, UP, DOWN);
   background(0xff000000);
   dungeon.draw(renderer);
