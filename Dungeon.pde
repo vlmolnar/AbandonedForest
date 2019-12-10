@@ -81,7 +81,7 @@ class Dungeon {
       
       //Rooms for sacrifice 1
       curr = Coord.add(checkpoint, new Coord(0, 1));
-      rooms.put(curr, new Room(map0));
+      rooms.put(curr, new Room(map3));
       
       curr = Coord.add(curr, new Coord(0, 1));
       rooms.put(curr, new Room(map0));

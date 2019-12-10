@@ -3,15 +3,14 @@ class Room {
   PVector halfScale = new PVector(0.5, 0.5);
   color fill = 0xffffffff;
   int[][] grid;
-  PImage spikeUp;
-  PImage spikeDown;
-  PImage grass;
+  PImage spikeUp,spikeDown, grass, tree;
   
   Room(int[][] map) {
     grid = map;
     spikeUp = flipImgVertical(loadImage("spike.png"));
     spikeDown = loadImage("spike.png");
     grass = flipImgVertical(loadImage("grass.png"));
+    tree = flipImgVertical(loadImage("tree.png"));
   }
   
   PImage flipImgVertical(PImage img) {
@@ -45,7 +44,9 @@ class Room {
     r.fill(0);
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid[0].length; j++) {
-        if (grid[i][j] == 1) {
+        if (grid[i][j] == 0) {
+          continue;
+        } else if (grid[i][j] == 1) {
           //r.square(loc.x - halfScale.x + i * GRID_SQUARE, loc.y - halfScale.y + j * GRID_SQUARE, GRID_SQUARE);
           //r.beginShape(QUADS);
           //r.vertex(loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE);
@@ -58,6 +59,8 @@ class Room {
           image(spikeUp, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
         } else if (grid[i][j] == 3) {
           image(spikeDown, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
+        } else if (grid[i][j] == 4) {
+          image(tree, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
         }
       }
     }

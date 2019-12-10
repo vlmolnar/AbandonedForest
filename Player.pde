@@ -160,7 +160,7 @@ class Player{
    //System.out.println("pos: " + pos.x + "  " + pos.y);
    //System.out.println("room: " + room.loc.x + "  " + room.loc.y);
    //System.out.println("grid: " + gridX + "  " + gridY);
-   if (room.grid[gridY][gridX] == 1) return true;
+   if (room.grid[gridY][gridX] == 1 || room.grid[gridY][gridX] == 2 || room.grid[gridY][gridX] == 3) return true;
    return false;
  }
  
