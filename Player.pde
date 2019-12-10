@@ -6,8 +6,9 @@ class Player{
   int sizeY;
   int maxLife = 3;
   int lives = 3;
-  int lastJumpTime = 0;
-  int lastDashTime = 0;
+  long lastJumpTime = 0;
+  long lastDashTime = 0;
+  float gravity = -1.2;
   boolean hasDied = false;
   boolean faceRight = true;
   boolean imgRight = true;
@@ -40,7 +41,7 @@ class Player{
     return flipped;
  }
  
-  void move(boolean[] pressed, int leftKey, int rightKey, int upKey, int downKey, int leftDash, int rightDash) {
+  void move(boolean[] pressed, int leftKey, int rightKey, int upKey, int leftDash, int rightDash, int spaceKey) {
    if (pressed[upKey] && (isOnGround || (!isOnGround && millis() - lastJumpTime < 500))) {
      if (isOnGround) lastJumpTime = millis();
      //moveInput(0, 3);
@@ -78,6 +79,10 @@ class Player{
        imgRight = true;
      }
      velocity = new PVector(10, 0);
+   } if (pressed[spaceKey] && isOnGround) {
+       System.out.println("space");
+       gravity *= -1;
+       foxImg = flipImgVertical(foxImg);
    }
    
    PVector futurePos = new PVector(this.position.x + this.velocity.x, this.position.y + this.velocity.y);
@@ -92,11 +97,11 @@ class Player{
    }
    
    //gravity
-   if (!collisionCheck(new PVector(position.x, position.y - 1.2)) && millis() - lastDashTime > 200) {
+   if ( !collisionCheck(new PVector(position.x, position.y + gravity)) && millis() - lastDashTime > 200) {
      System.out.println("gravity yey");
      isOnGround = false;
-     this.velocity.add(0, -1.2);
-     this.position = new PVector(position.x, position.y - 1.2);
+     this.velocity.add(0, gravity);
+     this.position = new PVector(position.x, position.y + gravity);
    } else {
      isOnGround = true;
      System.out.println("gravity nay");

@@ -1,3 +1,8 @@
+import ddf.minim.*;
+Minim minim;
+
+AudioPlayer audio;
+
 int roomCount = 40;
 boolean[] pressed = new boolean[256];
 //Avatar2D hero;
@@ -18,11 +23,14 @@ void setup() {
   dungeon = new Dungeon(System.currentTimeMillis(),
     roomCount, width, height);  
   player = new Player(dungeon.start.loc.x, dungeon.start.loc.y, 0, 0);
+  minim = new Minim(this);
+  audio = minim.loadFile("The Midnight Hour.mp3");
+  //audio.play();
   
 }
 
 void draw() {
-  player.move(pressed, 65, 68, 87, 83, 81, 69); //keys a, d, w, s, q, e
+  player.move(pressed, 65, 68, 87, 81, 69, 32); //keys a, d, w, s, q, e
   cam.lookAt(dungeon, player.position, pressed, UP, DOWN);
   background(0xff000000);
   dungeon.draw(renderer);

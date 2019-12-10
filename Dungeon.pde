@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
-static class Dungeon {
+class Dungeon {
   long seed;
   final PVector invDim = new PVector();
   final PVector max = new PVector();
@@ -45,6 +45,7 @@ static class Dungeon {
     // Reset rooms map and add origin.
     rooms.clear();
     Coord curr = new Coord(0, 0);
+    Coord checkpoint = new Coord(0, 0);
     rooms.put(curr, start);
 
     // Set random number generator to seed.
@@ -52,10 +53,12 @@ static class Dungeon {
     //rng.setSeed(this.seed);
     //println("Dungeon seed:", this);
 
-    /*
+    
     // To store dungeon minimums and maximums.
     int minx = 0; int miny = 0;
     int maxx = 0; int maxy = 0;
+
+/*
 
     // Start room has already been determined, so
     // loop for one less room than count.
@@ -72,16 +75,59 @@ static class Dungeon {
       }
       */
       
-      curr = Coord.add(curr, new Coord(1, 0));
       // Once a unique coordinate is set, add new room.
+      checkpoint = Coord.add(checkpoint, new Coord(1, 0));
+      rooms.put(checkpoint, new Room(map2));
+      
+      //Rooms for sacrifice 1
+      curr = Coord.add(checkpoint, new Coord(0, 1));
       rooms.put(curr, new Room(map0));
+      
+      curr = Coord.add(curr, new Coord(0, 1));
+      rooms.put(curr, new Room(map0));
+      
+      curr = Coord.add(curr, new Coord(1, 0));
+      rooms.put(curr, new Room(map0));
+      
+      curr = Coord.add(curr, new Coord(0, -1));
+      rooms.put(curr, new Room(map0));
+      
+      curr = Coord.add(curr, new Coord(1, 0));
+      rooms.put(curr, new Room(map0));
+      
+      curr = Coord.add(curr, new Coord(0, 1));
+      rooms.put(curr, new Room(map0));
+      
+      curr = Coord.add(curr, new Coord(1, 0));
+      rooms.put(curr, new Room(map0));
+      
+      
+      // Rooms for sacrifice 2
+      checkpoint = Coord.add(checkpoint, new Coord(1, 0));
+      rooms.put(checkpoint, new Room(map1));
+      
+      curr = Coord.add(checkpoint, new Coord(1, 0));
+      rooms.put(curr, new Room(map1));
+      
+      curr = Coord.add(curr, new Coord(1, 0));
+      rooms.put(curr, new Room(map1));
+      
+      curr = Coord.add(curr, new Coord(0, -1));
+      rooms.put(curr, new Room(map1));
+      
+      curr = Coord.add(curr, new Coord(1, 0));
+      rooms.put(curr, new Room(map1));
+      
+      //Rooms for sacrifice 3
+      //curr = Coord.add(checkpoint1, new Coord(1, -1));
+      //rooms.put(curr, new Room(map0));
 
       // Update min and max coordinates.
       minx = min(minx, curr.x);
       miny = min(miny, curr.y);
       maxx = max(maxx, curr.x);
       maxy = max(maxy, curr.y);
-    }
+    //}
 
     // Set room dimensions. invDim will be used to find
     // appropriate room by coordinate given a vector.

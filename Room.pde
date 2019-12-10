@@ -1,12 +1,26 @@
-static class Room {
+class Room {
   final PVector loc = new PVector(0.0, 0.0);
   PVector halfScale = new PVector(0.5, 0.5);
   color fill = 0xffffffff;
   int[][] grid;
+  PImage spikeUp;
+  PImage spikeDown;
+  PImage grass;
   
   Room(int[][] map) {
     grid = map;
+    spikeUp = flipImgVertical(loadImage("spike.png"));
+    spikeDown = loadImage("spike.png");
+    grass = flipImgVertical(loadImage("grass.png"));
   }
+  
+  PImage flipImgVertical(PImage img) {
+   PImage flipped = createImage(img.width, img.height, ARGB);
+   for(int y = 0 ; y < flipped.height; y++) {
+      flipped.set(0, flipped.height-y-1, img.get(0, y, img.width, 1));
+    }
+    return flipped;
+ }
   
   void drawRoom(PGraphicsOpenGL r) {
     r.beginShape(QUADS);
@@ -33,12 +47,17 @@ static class Room {
       for (int j = 0; j < grid[0].length; j++) {
         if (grid[i][j] == 1) {
           //r.square(loc.x - halfScale.x + i * GRID_SQUARE, loc.y - halfScale.y + j * GRID_SQUARE, GRID_SQUARE);
-          r.beginShape(QUADS);
-          r.vertex(loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE);
-          r.vertex(loc.x - halfScale.x + j * GRID_SQUARE + GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE);
-          r.vertex(loc.x - halfScale.x + j * GRID_SQUARE + GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
-          r.vertex(loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
-          r.endShape(CLOSE);
+          //r.beginShape(QUADS);
+          //r.vertex(loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE);
+          //r.vertex(loc.x - halfScale.x + j * GRID_SQUARE + GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE);
+          //r.vertex(loc.x - halfScale.x + j * GRID_SQUARE + GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
+          //r.vertex(loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
+          //r.endShape(CLOSE);
+          image(grass, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
+        } else if (grid[i][j] == 2) {
+          image(spikeUp, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
+        } else if (grid[i][j] == 3) {
+          image(spikeDown, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
         }
       }
     }
