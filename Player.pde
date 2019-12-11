@@ -13,6 +13,7 @@ class Player{
   boolean faceRight = true;
   boolean imgRight = true;
   boolean isOnGround = true;
+  boolean lockJump = false;
   //boolean jumpDisable = false;
   //boolean dashDisable = false;
   
@@ -42,17 +43,28 @@ class Player{
  }
  
   void move(boolean[] pressed, int leftKey, int rightKey, int upKey, int leftDash, int rightDash, int spaceKey) {
-   if (pressed[upKey] && (isOnGround || (!isOnGround && millis() - lastJumpTime < 500))) {
+     // TODO
+     // Remove drag and added velocity to give better control of when character stops
+     // Reduce max movement speed when player is in air, but leave it same on ground
+    if (pressed[upKey]&& !lockJump && (isOnGround || (!isOnGround && millis() - lastJumpTime < 500))) {
      if (isOnGround) lastJumpTime = millis();
      //moveInput(0, 3);
      velocity = new PVector(velocity.x, 8); 
-   } if (pressed[leftKey] && !pressed[rightKey] ) {
+   } else {
+     if (isOnGround) lockJump = false;
+     else lockJump = true;
+   }
+   if (pressed[leftKey] && !pressed[rightKey] ) {
      faceRight = false;
      if (imgRight) {
        foxImg = flipImgHorizontal(foxImg);
        imgRight = false;
      }
+     if (isOnGround) {
      moveInput(-1.6, 0);
+     } else {
+       moveInput(-1, 0);
+     }
    //} if (pressed[downKey]) {
    //  moveInput(0, -1.6);
    }
@@ -62,8 +74,12 @@ class Player{
        foxImg = flipImgHorizontal(foxImg);
        imgRight = true;
      }
-     moveInput(1.6, 0);
-   } if (pressed[leftDash] && millis() - lastDashTime > 1000 ) {
+     if (isOnGround) {
+       moveInput(1.6, 0);
+     } else {
+       moveInput(1, 0);
+     }
+   } if (pressed[leftDash] && millis() - lastDashTime > 500 ) {
      lastDashTime = millis();
      faceRight = false;
      if (imgRight) {
@@ -71,7 +87,7 @@ class Player{
        imgRight = false;
      }
      velocity = new PVector(-10, 0);
-   } if (pressed[rightDash] && millis() - lastDashTime > 1000) {
+   } if (pressed[rightDash] && millis() - lastDashTime > 500) {
      lastDashTime = millis();
      faceRight = true;
      if (!imgRight) {

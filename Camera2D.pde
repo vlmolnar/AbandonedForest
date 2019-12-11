@@ -5,7 +5,7 @@ static class Camera2D {
   final PVector j = new PVector(0.0, 1.0); /* Up Axis */
   
   float rot = 0.0;
-  float smoothing = 0.01;
+  float smoothing = 0.04;
   final PVector scl = new PVector(1.0, 1.0, 1.0);
 
   // setMatrix feeds into PGraphicsOpenGL's applyMatrixImpl,
