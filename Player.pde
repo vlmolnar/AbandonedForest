@@ -49,10 +49,11 @@ class Player{
     if (pressed[upKey]&& !lockJump && (isOnGround || (!isOnGround && millis() - lastJumpTime < 500))) {
      if (isOnGround) lastJumpTime = millis();
      //moveInput(0, 3);
-     velocity = new PVector(velocity.x, 8); 
+     velocity = gravity < 0 ? new PVector(velocity.x, 8) : new PVector(velocity.x, -8); 
    } else {
-     if (isOnGround) lockJump = false;
-     else lockJump = true;
+     lockJump = isOnGround ? false : true;
+     //if (isOnGround) lockJump = false;
+     //else lockJump = true;
    }
    if (pressed[leftKey] && !pressed[rightKey] ) {
      faceRight = false;
