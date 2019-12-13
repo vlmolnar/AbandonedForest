@@ -20,10 +20,15 @@ void setup() {
   textureMode(NORMAL);
   textureWrap(REPEAT);
   
-  dialogue = new Dialogue();
+  surface.setTitle("Abandoned Forest");
+  
+  
   checkPoint = CheckPoint.START;
   PVector startPos = checkPointCoord();
   player = new Player(startPos.x, startPos.y, 0, 0);
+  
+  dialogue = new Dialogue(false, false, false, false);
+  dialogue.cutSceneOn = false;
   
   renderer = (PGraphics2D)g;
   cam = new DungeonCam(renderer);
@@ -76,8 +81,16 @@ void draw() {
     }
   }
   
+  
   player.drawPlayer();
-  surface.setTitle(String.format("%.1f", frameRate));
+  if (dialogue.cutSceneOn) {
+    dialogue.cutScene1(1, pressed[32]);
+  } else {
+    cutSceneCheck();
+  }
+  //surface.setTitle(String.format("%.1f", frameRate));
+  
+  // Uncomment for grid lattice
   //for (int i = -1 * (width/2); i < width/2; i+=50) {
   //  line(i, -1 * (height/2), i, height/2);
   //}
@@ -85,6 +98,13 @@ void draw() {
   //  line(-1 * (width/2), i, width/2, i);
   //}
     
+}
+
+void cutSceneCheck() {
+   Room room = dungeon.getRoom(player.position);
+   if (!dialogue.cutScene1Complete && room.loc.equals(new PVector(1800,0)) && player.position.x > room.loc.x - 500) {
+     dialogue.cutSceneOn = true;
+   }
 }
 
 void keyPressed() {

@@ -16,8 +16,6 @@ class Player{
   boolean isOnGround = true;
   boolean lockJump = false;
   boolean isImmune = false;
-  //boolean jumpDisable = false;
-  //boolean dashDisable = false;
   
  Player(float x, float y, float velX, float velY) {
    this.position = new PVector(x, y);
@@ -47,64 +45,66 @@ class Player{
  }
  
   void move(boolean[] pressed, int leftKey, int rightKey, int upKey, int leftDash, int rightDash, int spaceKey) {
-     // TODO
-     // Remove drag and added velocity to give better control of when character stops
-     // Reduce max movement speed when player is in air, but leave it same on ground
-    if (pressed[upKey]&& !lockJump && (isOnGround || (!isOnGround && millis() - lastJumpTime < 500))) {
-      if (isOnGround) lastJumpTime = millis();
-     //moveInput(0, 3);
-     velocity = gravity < 0 ? new PVector(velocity.x, 8) : new PVector(velocity.x, -8); 
-   } else {
-     lockJump = isOnGround ? false : true;
-     //if (isOnGround) lockJump = false;
-     //else lockJump = true;
-   }
-   if (pressed[leftKey] && !pressed[rightKey] ) {
-     faceRight = false;
-     if (imgRight) {
-       foxImg = flipImgHorizontal(foxImg);
-       imgRight = false;
-     }
-     if (isOnGround) {
-     moveInput(-1.6, 0);
-     } else {
-       moveInput(-1, 0);
-     }
-   //} if (pressed[downKey]) {
-   //  moveInput(0, -1.6);
-   }
-   if (pressed[rightKey] && !pressed[leftKey]) {
-     faceRight = true;
-     if (!imgRight) {
-       foxImg = flipImgHorizontal(foxImg);
-       imgRight = true;
-     }
-     if (isOnGround) {
-       moveInput(1.6, 0);
-     } else {
-       moveInput(1, 0);
-     }
-   } if (pressed[leftDash] && millis() - lastDashTime > 500 ) {
-     lastDashTime = millis();
-     faceRight = false;
-     if (imgRight) {
-       foxImg = flipImgHorizontal(foxImg);
-       imgRight = false;
-     }
-     velocity = new PVector(-10, 0);
-   } if (pressed[rightDash] && millis() - lastDashTime > 500) {
-     lastDashTime = millis();
-     faceRight = true;
-     if (!imgRight) {
-       foxImg = flipImgHorizontal(foxImg);
-       imgRight = true;
-     }
-     velocity = new PVector(10, 0);
-   } if (pressed[spaceKey] && isOnGround) {
-       System.out.println("space");
-       gravity *= -1;
-       foxImg = flipImgVertical(foxImg);
-   }
+    if (!dialogue.cutSceneOn && millis() - dialogue.lastSpaceTime > 500) {
+      
+      
+        if (pressed[upKey] &&  !lockJump && (isOnGround || (!isOnGround && millis() - lastJumpTime < 500)) && millis() -  lastDashTime > 500) {
+          if (isOnGround) lastJumpTime = millis();
+         velocity = gravity < 0 ? new PVector(velocity.x, 8) : new PVector(velocity.x, -8); 
+       } else {
+         lockJump = isOnGround ? false : true;
+       }
+         
+       if (pressed[rightKey] && !pressed[leftKey]) {
+         faceRight = true;
+         if (!imgRight) {
+           foxImg = flipImgHorizontal(foxImg);
+           imgRight = true;
+         }
+         if (isOnGround) {
+           moveInput(1.6, 0);
+         } else {
+           moveInput(1, 0);
+         }
+       }
+       
+       if (pressed[leftKey] && !pressed[rightKey]) {
+         faceRight = false;
+         if (imgRight) {
+           foxImg = flipImgHorizontal(foxImg);
+           imgRight = false;
+         }
+         if (isOnGround) {
+         moveInput(-1.6, 0);
+         } else {
+           moveInput(-1, 0);
+         }
+       }  
+       
+       if (pressed[leftDash] && millis() - lastDashTime > 500 ) {
+         lastDashTime = millis();
+         faceRight = false;
+         if (imgRight) {
+           foxImg = flipImgHorizontal(foxImg);
+           imgRight = false;
+         }
+         velocity = new PVector(-10, 0);
+       }
+       
+       if (pressed[rightDash] && millis() - lastDashTime > 500) {
+         lastDashTime = millis();
+         faceRight = true;
+         if (!imgRight) {
+           foxImg = flipImgHorizontal(foxImg);
+           imgRight = true;
+         }
+         velocity = new PVector(10, 0);
+       }
+       
+       if (pressed[spaceKey] && isOnGround) {
+           reverseGravity();
+       }
+    }
    
    PVector futurePos = new PVector(this.position.x + this.velocity.x, this.position.y + this.velocity.y);
    if (!collisionCheck(futurePos)) {
@@ -127,6 +127,11 @@ class Player{
      isOnGround = true;
      //System.out.println("gravity nay");
    }
+ }
+ 
+ void reverseGravity() {
+   gravity *= -1;
+   foxImg = flipImgVertical(foxImg);
  }
  
  boolean collisionCheck(PVector pos) {
@@ -195,8 +200,7 @@ class Player{
         if (lives == 0) {
           lastDamageTime = 0;
           if (gravity > 0) {
-            gravity *= -1;
-            foxImg = flipImgVertical(foxImg);
+            reverseGravity();
           }
            player.position = checkPointCoord();
            //player.position = checkPointPos0;
