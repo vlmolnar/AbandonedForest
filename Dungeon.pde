@@ -10,11 +10,11 @@ class Dungeon {
   final PVector max = new PVector();
   final PVector min = new PVector();
   final Random rng = new Random();
-  final Room start = new Room(map1);
+  Room start = new Room(map1);
   final NavigableMap < Coord, Room > rooms = new TreeMap < Coord, Room > ();
 
-  Dungeon(long seed, int count, float w, float h) {
-    generate(seed, count, w, h);
+  Dungeon(float w, float h) {
+    generate(w, h);
   }
 
   String toString() {
@@ -38,8 +38,7 @@ class Dungeon {
     r.popStyle();
   }
 
-  NavigableMap < Coord, Room > generate(long seed, int count,
-    float w, float h) {
+  NavigableMap < Coord, Room > generate(float w, float h) {
 
     // Create a default room located at (0, 0).
     // Reset rooms map and add origin.
@@ -156,6 +155,9 @@ class Dungeon {
       room.loc.set(coord.x * w, coord.y * h);
       room.halfScale.set(halfw, halfh);
     }
+    
+    start = getRoom(player.position);
+    
     return rooms;
     
     //// Create a default room located at (0, 0).

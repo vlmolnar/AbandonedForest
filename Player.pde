@@ -1,5 +1,5 @@
 class Player{
-  PImage foxImg = loadImage("fox.png");
+  PImage foxImg, life, nolife;
   PVector position;
   PVector velocity;
   int sizeX;
@@ -8,19 +8,23 @@ class Player{
   int lives = 3;
   long lastJumpTime = 0;
   long lastDashTime = 0;
+  long lastDamageTime = 0;
   float gravity = -1.2;
   boolean hasDied = false;
   boolean faceRight = true;
   boolean imgRight = true;
   boolean isOnGround = true;
   boolean lockJump = false;
+  boolean isImmune = false;
   //boolean jumpDisable = false;
   //boolean dashDisable = false;
   
  Player(float x, float y, float velX, float velY) {
    this.position = new PVector(x, y);
    this.velocity = new PVector(velX, velY);
-   foxImg = flipImgVertical(foxImg);
+   foxImg = flipImgVertical(loadImage("fox.png"));
+   life = flipImgVertical(loadImage("life.png"));
+   nolife = flipImgVertical(loadImage("nolife.png"));
    sizeX = foxImg.width;
    sizeY = foxImg.height;
  }
@@ -47,7 +51,7 @@ class Player{
      // Remove drag and added velocity to give better control of when character stops
      // Reduce max movement speed when player is in air, but leave it same on ground
     if (pressed[upKey]&& !lockJump && (isOnGround || (!isOnGround && millis() - lastJumpTime < 500))) {
-     if (isOnGround) lastJumpTime = millis();
+      if (isOnGround) lastJumpTime = millis();
      //moveInput(0, 3);
      velocity = gravity < 0 ? new PVector(velocity.x, 8) : new PVector(velocity.x, -8); 
    } else {
@@ -115,13 +119,13 @@ class Player{
    
    //gravity
    if ( !collisionCheck(new PVector(position.x, position.y + gravity)) && millis() - lastDashTime > 200) {
-     System.out.println("gravity yey");
+     //System.out.println("gravity yey");
      isOnGround = false;
      this.velocity.add(0, gravity);
      this.position = new PVector(position.x, position.y + gravity);
    } else {
      isOnGround = true;
-     System.out.println("gravity nay");
+     //System.out.println("gravity nay");
    }
  }
  
@@ -177,7 +181,34 @@ class Player{
    //System.out.println("pos: " + pos.x + "  " + pos.y);
    //System.out.println("room: " + room.loc.x + "  " + room.loc.y);
    //System.out.println("grid: " + gridX + "  " + gridY);
-   if (room.grid[gridY][gridX] == 1 || room.grid[gridY][gridX] == 2 || room.grid[gridY][gridX] == 3) return true;
+   
+   if (isImmune && millis() - lastDamageTime > 2000) {
+     isImmune = false;
+     foxImg.filter(INVERT);
+   }
+   if (room.grid[gridY][gridX] == 2 || room.grid[gridY][gridX] == 3) {  // Damage
+      if (millis() - lastDamageTime > 2000) {
+        lastDamageTime = millis();
+        lives -= 1;
+        if (lives == 0) {
+          lastDamageTime = 0;
+          if (gravity > 0) {
+            gravity *= -1;
+            foxImg = flipImgVertical(foxImg);
+          }
+           player.position = checkPointCoord();
+           //player.position = checkPointPos0;
+           player.lives = player.maxLife;
+        } else {
+          isImmune = true;
+          foxImg.filter(INVERT);
+        }
+      }
+     return true;
+   }
+   if (room.grid[gridY][gridX] == 1) {  // Wall
+     return true;
+   }
    return false;
  }
  
@@ -200,6 +231,25 @@ class Player{
    //rect(this.position.x, this.position.y, this.sizeX, this.sizeY);
    
    image(foxImg, this.position.x, this.position.y);
+   PVector dungeonCorner = new PVector(dungeon.getRoom(position).loc.x - width/2, dungeon.getRoom(position).loc.y + height/2 - GRID_SQUARE);
+   for (int i = 0; i < maxLife; i++) {
+     if (i < lives) {
+       image(life, dungeonCorner.x + i * GRID_SQUARE, dungeonCorner.y);
+     } else {
+        image(nolife, dungeonCorner.x + i * GRID_SQUARE, dungeonCorner.y); 
+     }
+   }
+   //image(life, dungeonCorner.x, dungeonCorner.y);
+   //image(nolife, 50, 200);
+   
+   // Text correct display
+   //fill(229, 33, 33);
+   //textSize(50);
+   //pushMatrix();
+   //scale(1, -1);
+   //text("lives " + lives, -200, -200);
+   //popMatrix();
+   //fill(255);
    
  }
 }

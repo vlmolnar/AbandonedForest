@@ -1,16 +1,15 @@
 import ddf.minim.*;
 Minim minim;
 
-AudioPlayer audio;
+AudioPlayer music, jumpSFX, damageSFX; 
 
 int roomCount = 40;
 boolean[] pressed = new boolean[256];
-//Avatar2D hero;
 Player player;
 Dungeon dungeon;
 DungeonCam cam;
 PGraphics2D renderer;
-final static int GRID_SQUARE = 50;  //50 pixels, height/36, width/20
+CheckPoint checkPoint = CheckPoint.START;
 
 void setup() {
   //fullScreen(P2D);
@@ -18,20 +17,44 @@ void setup() {
   size(1800, 1000, P2D);
   textureMode(NORMAL);
   textureWrap(REPEAT);
+    
+  PVector startPos = checkPointCoord();
+  player = new Player(startPos.x, startPos.y, 0, 0);
+  
   renderer = (PGraphics2D)g;
   cam = new DungeonCam(renderer);
-  dungeon = new Dungeon(System.currentTimeMillis(),
-    roomCount, width, height);  
-  player = new Player(dungeon.start.loc.x, dungeon.start.loc.y, 0, 0);
-  minim = new Minim(this);
-  audio = minim.loadFile("The Midnight Hour.mp3");
-  //audio.play();
+  dungeon = new Dungeon(width, height);  
   
+  cam.lookAt(dungeon, player.position, pressed, UP, DOWN, true);
+  
+  minim = new Minim(this);
+  //music = minim.loadFile("The Midnight Hour.mp3");
+  //music.loop();
+  //int buffersize = 256;
+  //jumpSFX = minim.loadFile("swish.wav");
+  //jumpSFX.play();
+  //damageSFX = minim.loadFile("hurt.wav");
+  //damageSFX.play();
+}
+
+PVector checkPointCoord() {
+  PVector returnPos;
+  switch(checkPoint) {
+   case POINT1: returnPos = checkPointPos1;
+                break;
+   case POINT2: returnPos = checkPointPos2;
+                break;
+   case POINT3: returnPos = checkPointPos3;
+                break;
+   default: returnPos = checkPointPos0;
+                break;
+ }
+ return returnPos;
 }
 
 void draw() {
-  player.move(pressed, 65, 68, 87, LEFT, RIGHT, 32); //keys a, d, w, s, q, e 81, 69
-  cam.lookAt(dungeon, player.position, pressed, UP, DOWN);
+  player.move(pressed, 65, 68, 87, LEFT, RIGHT, 32); //keys a, d, w, <-, ->, SPACE
+  cam.lookAt(dungeon, player.position, pressed, UP, DOWN, false);
   background(0xff000000);
   dungeon.draw(renderer);
   player.drawPlayer();
@@ -54,6 +77,5 @@ void keyReleased() {
 }
 
 void mouseReleased() {
-  dungeon.generate(System.currentTimeMillis(),
-    roomCount, width, height);
+  dungeon.generate(width, height);
 }

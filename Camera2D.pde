@@ -22,19 +22,20 @@ static class Camera2D {
     pmv = renderer.projmodelview;
   }
 
-  Camera2D lookAt(float tx, float ty, float rot, float zoomW, float zoomH) {
+  Camera2D lookAt(float tx, float ty, float rot, float zoomW, float zoomH, boolean snap) {
       
-    // Snap to target immediately.
-    //loc.set(tx, ty, 0.0);
-    //scl.set(zoomW, zoomH, 0.0);
-    //this.rot = rot;
-
-    // Ease toward target.
+    
+    if (snap) { // Snap to target immediately, used during setup
+    loc.set(tx, ty, 0.0);
+    scl.set(zoomW, zoomH, 0.0);
+    this.rot = rot;
+    } else { // Ease toward target, used when moving across rooms
     loc.lerp(tx, ty, 0.0, smoothing);
     scl.lerp(zoomW, zoomH, 0.0, smoothing);
     this.rot = lerpAngle(this.rot, rot, smoothing);
     PVector.fromAngle(this.rot, i);
     j.set(-i.y, i.x);
+    }
 
     c.set(
       1.0, 0.0, 0.0, renderer.width * 0.5, 
