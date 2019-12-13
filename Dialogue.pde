@@ -14,14 +14,14 @@ class Dialogue {
   long lastSpaceTime = 0;
   PVector roomLoc = new PVector(0, 0);
   int maxStrLen = 72;
-  boolean cutSceneOn = false;
-  boolean cutScene1Complete, cutScene2Complete, cutScene3Complete, cutScene4Complete;
+  boolean cutSceneOn, cutScene1Complete, cutScene2Complete, cutScene3Complete, cutScene4Complete;
   
-  Dialogue(boolean cs1,boolean cs2, boolean cs3, boolean cs4) {
-    cutScene1Complete = cs1;
-    cutScene2Complete = cs2;
-    cutScene3Complete = cs3;
-    cutScene4Complete = cs4;
+  Dialogue() {
+    cutSceneOn = false;
+    cutScene1Complete = false;
+    cutScene2Complete = false;
+    cutScene3Complete = false;
+    cutScene4Complete = false;
   }
 
   

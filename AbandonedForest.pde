@@ -12,6 +12,7 @@ DungeonCam cam;
 PGraphics2D renderer;
 CheckPoint checkPoint;
 Dialogue dialogue;
+JSONObject json;
 
 void setup() {
   //fullScreen(P2D);
@@ -22,13 +23,16 @@ void setup() {
   
   surface.setTitle("Abandoned Forest");
   
+  dialogue = new Dialogue();
   
-  checkPoint = CheckPoint.START;
+  loadFromFile();
+  
+  //checkPoint = CheckPoint.START;
   PVector startPos = checkPointCoord();
   player = new Player(startPos.x, startPos.y, 0, 0);
   
-  dialogue = new Dialogue(false, false, false, false);
-  dialogue.cutSceneOn = false;
+  
+  //dialogue.cutSceneOn = false;
   
   renderer = (PGraphics2D)g;
   cam = new DungeonCam(renderer);
@@ -61,6 +65,36 @@ PVector checkPointCoord() {
  return returnPos;
 }
 
+int checkPointToInt() {
+  int num;
+  switch(checkPoint) {
+   case POINT1: num = 1;
+                break;
+   case POINT2: num = 2;
+                break;
+   case POINT3: num = 3;
+                break;
+   default: num = 0;
+                break;
+ }
+ return num;
+}
+
+CheckPoint intToCheckPoint(int num) {
+  CheckPoint point;
+  switch(num) {
+   case 1: point = CheckPoint.POINT1;
+                break;
+   case 2: point = CheckPoint.POINT2;
+                break;
+   case 3: point = CheckPoint.POINT3;
+                break;
+   default: point = CheckPoint.START;
+                break;
+ }
+ return point;
+}
+
 void draw() {
   player.move(pressed, 65, 68, 87, LEFT, RIGHT, 32); //keys a, d, w, <-, ->, SPACE
   cam.lookAt(dungeon, player.position, pressed, UP, DOWN, false);
@@ -83,10 +117,13 @@ void draw() {
   
   
   player.drawPlayer();
+  
+  checkPointFind();
+  
   if (dialogue.cutSceneOn) {
     dialogue.cutScene1(1, pressed[32]);
   } else {
-    cutSceneCheck();
+    cutSceneFind();
   }
   //surface.setTitle(String.format("%.1f", frameRate));
   
@@ -100,12 +137,50 @@ void draw() {
     
 }
 
-void cutSceneCheck() {
+void cutSceneFind() {
    Room room = dungeon.getRoom(player.position);
    if (!dialogue.cutScene1Complete && room.loc.equals(new PVector(1800,0)) && player.position.x > room.loc.x - 500) {
      dialogue.cutSceneOn = true;
    }
 }
+
+void checkPointFind() {
+  Room room = dungeon.getRoom(player.position);
+   if (room.loc.equals(new PVector(1800,0))
+         && player.position.x > room.loc.x - 400 && player.position.x < room.loc.x + 100 && player.position.y < room.loc.y) {
+     player.lives = player.maxLife;
+     if (checkPoint != CheckPoint.POINT1) {
+       checkPoint = CheckPoint.POINT1;
+       saveToFile();
+     }
+   }
+  
+}
+
+void saveToFile() {
+  json = new JSONObject();
+  json.setInt("checkPoint", checkPointToInt());
+  json.setBoolean("cutScene1Complete", dialogue.cutScene1Complete);
+  json.setBoolean("cutScene2Complete", dialogue.cutScene2Complete);
+  json.setBoolean("cutScene3Complete", dialogue.cutScene3Complete);
+  json.setBoolean("cutScene4Complete", dialogue.cutScene4Complete);
+  saveJSONObject(json, "data/save.json");
+}
+
+void loadFromFile() {
+    File f = new File(dataPath("save.json"));
+    if (f.exists()) {
+      json = loadJSONObject("save.json");
+      checkPoint = intToCheckPoint(json.getInt("checkPoint"));
+      dialogue.cutScene1Complete = (json.getBoolean("cutScene1Complete"));
+      dialogue.cutScene2Complete = (json.getBoolean("cutScene2Complete"));
+      dialogue.cutScene3Complete = (json.getBoolean("cutScene3Complete"));
+      dialogue.cutScene4Complete = (json.getBoolean("cutScene4Complete"));
+    } else {
+      checkPoint = CheckPoint.START;
+ 
+    }
+  }
 
 void keyPressed() {
   pressed[keyCode] = true;
