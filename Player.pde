@@ -149,9 +149,9 @@ class Player{
    //if ((topCollide && velocity. y > 0) || (bottomCollide && velocity.y < 0)) velocity.y = 0;
    
    // Collision
-   return (pointCollision(pos, dungeon.getRoom(pos)) || pointCollision(pos2, dungeon.getRoom(pos2))
-       || pointCollision(pos3, dungeon.getRoom(pos3)) || pointCollision(pos4, dungeon.getRoom(pos4))
-       || pointCollision(pos5, dungeon.getRoom(pos5)) || pointCollision(pos6, dungeon.getRoom(pos6)));
+   return (pointCollision(pos, dungeon.getRoom(pos)) | pointCollision(pos2, dungeon.getRoom(pos2))
+       | pointCollision(pos3, dungeon.getRoom(pos3)) | pointCollision(pos4, dungeon.getRoom(pos4))
+       | pointCollision(pos5, dungeon.getRoom(pos5)) | pointCollision(pos6, dungeon.getRoom(pos6)));
          
          //if() {
          //Collision with ground
@@ -174,9 +174,9 @@ class Player{
    int gridX, gridY;
    gridX = (int)(pos.x + room.halfScale.x - room.loc.x)/ GRID_SQUARE;
    gridY = 19 - (int)(pos.y + room.halfScale.y - room.loc.y)/ GRID_SQUARE; // Compensates for flipped y axis
-   if (gridX > 35) gridX = 35;  // Prevents array out of bounds but allows 0 value
+   if (gridX > 35) gridX = 35;  // Prevents array out of bounds
    if (gridY > 19) gridY = 19;
-   if (gridX < 0) gridX = 0;  // Prevents array out of bounds but allows 0 value
+   if (gridX < 0) gridX = 0;  // Prevents array out of bounds
    if (gridY < 0) gridY = 0;
    //System.out.println("pos: " + pos.x + "  " + pos.y);
    //System.out.println("room: " + room.loc.x + "  " + room.loc.y);
@@ -190,6 +190,8 @@ class Player{
       if (millis() - lastDamageTime > 2000) {
         lastDamageTime = millis();
         lives -= 1;
+        
+        // Death
         if (lives == 0) {
           lastDamageTime = 0;
           if (gravity > 0) {
