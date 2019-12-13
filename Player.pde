@@ -241,17 +241,5 @@ class Player{
         image(nolife, dungeonCorner.x + i * GRID_SQUARE, dungeonCorner.y); 
      }
    }
-   //image(life, dungeonCorner.x, dungeonCorner.y);
-   //image(nolife, 50, 200);
-   
-   // Text correct display
-   //fill(229, 33, 33);
-   //textSize(50);
-   //pushMatrix();
-   //scale(1, -1);
-   //text("lives " + lives, -200, -200);
-   //popMatrix();
-   //fill(255);
-   
  }
 }

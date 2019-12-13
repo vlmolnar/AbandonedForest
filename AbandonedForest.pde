@@ -5,11 +5,13 @@ AudioPlayer music, jumpSFX, damageSFX;
 
 int roomCount = 40;
 boolean[] pressed = new boolean[256];
+boolean tutorialOver = false;
 Player player;
 Dungeon dungeon;
 DungeonCam cam;
 PGraphics2D renderer;
-CheckPoint checkPoint = CheckPoint.START;
+CheckPoint checkPoint;
+Dialogue dialogue;
 
 void setup() {
   //fullScreen(P2D);
@@ -17,7 +19,9 @@ void setup() {
   size(1800, 1000, P2D);
   textureMode(NORMAL);
   textureWrap(REPEAT);
-    
+  
+  dialogue = new Dialogue();
+  checkPoint = CheckPoint.START;
   PVector startPos = checkPointCoord();
   player = new Player(startPos.x, startPos.y, 0, 0);
   
@@ -57,6 +61,21 @@ void draw() {
   cam.lookAt(dungeon, player.position, pressed, UP, DOWN, false);
   background(0xff000000);
   dungeon.draw(renderer);
+  
+  if (!tutorialOver) {
+    if (player.position.x < 150 && player.position.y < -150) {
+      dialogue.showText("Use a, w and d keys to move", -650, 300);
+    } else if (player.position.x < -500 && player.position.y > -150) {
+      dialogue.showText("Use <- and -> keys to dash", -400, -200);
+    } else if (player.position.x > 150 && player.position.y > -150) {
+      dialogue.showText("Use SPACE key to reverse gravity", 220, -300);
+    }
+    
+    if (!(dungeon.getRoom(player.position).loc.x == 0 && dungeon.getRoom(player.position).loc.y == 0)) {
+      tutorialOver = true;
+    }
+  }
+  
   player.drawPlayer();
   surface.setTitle(String.format("%.1f", frameRate));
   //for (int i = -1 * (width/2); i < width/2; i+=50) {
