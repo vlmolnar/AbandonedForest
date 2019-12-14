@@ -44,11 +44,26 @@ class Player{
     return flipped;
  }
  
+  void moveInput(float x, float y) {
+    float moveX = x;
+    float moveY = y;
+   if (abs(velocity.x + moveX) > 8) moveX = moveX/abs(moveX) * 8; 
+   if(abs(velocity.y + moveY) > 10) moveY = moveY/abs(moveY) * 10;
+   if(abs(velocity.x + moveX) < 8 && abs(velocity.y + moveY) < 10) {
+   this.velocity.add(new PVector(moveX, moveY));
+   //if (abs(velocity.x + moveX) > 8) moveX = moveX/abs(moveX) * 8; 
+   //if(abs(velocity.y + moveY) > 10) moveY = moveY/abs(moveY) * 10;
+   //if(abs(velocity.x + moveX) < 8 && abs(velocity.y + moveY) < 10) {
+   //this.velocity.add(new PVector(moveX, moveY));
+   }
+ 
+ }
+ 
   void move(boolean[] pressed, int leftKey, int rightKey, int upKey, int leftDash, int rightDash, int spaceKey) {
     if (!dialogue.cutSceneOn && millis() - dialogue.lastSpaceTime > 500) {
       
       
-        if (pressed[upKey] &&  !lockJump && (isOnGround || (!isOnGround && millis() - lastJumpTime < 500)) && millis() -  lastDashTime > 500) {
+        if (pressed[upKey] &&  !lockJump && (isOnGround || (!isOnGround && millis() - lastJumpTime < 450)) && millis() -  lastDashTime > 500) {
           if (isOnGround) lastJumpTime = millis();
          velocity = gravity < 0 ? new PVector(velocity.x, 8) : new PVector(velocity.x, -8); 
        } else {
@@ -64,7 +79,7 @@ class Player{
          if (isOnGround) {
            moveInput(1.6, 0);
          } else {
-           moveInput(1, 0);
+           moveInput(4, 0);
          }
        }
        
@@ -77,7 +92,7 @@ class Player{
          if (isOnGround) {
          moveInput(-1.6, 0);
          } else {
-           moveInput(-1, 0);
+           moveInput(-4, 0);
          }
        }  
        
@@ -217,18 +232,7 @@ class Player{
    }
    return false;
  }
- 
- 
 
- 
- void moveInput(float moveX, float moveY) {
-   //if (abs(velocity.x + moveX) < 8) moveX = moveX/abs(moveX) * 8; 
-   //if(abs(velocity.y + moveY) < 10) moveY = moveY/abs(moveY) * 10;
-   if(abs(velocity.x + moveX) < 8 && abs(velocity.y + moveY) < 10) {
-   this.velocity.add(new PVector(moveX, moveY));
-   }
- 
- }
 
  void drawPlayer() {
    fill(255);

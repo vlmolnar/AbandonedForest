@@ -31,9 +31,6 @@ void setup() {
   PVector startPos = checkPointCoord();
   player = new Player(startPos.x, startPos.y, 0, 0);
   
-  
-  //dialogue.cutSceneOn = false;
-  
   renderer = (PGraphics2D)g;
   cam = new DungeonCam(renderer);
   dungeon = new Dungeon(width, height);  
