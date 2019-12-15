@@ -122,6 +122,7 @@ void draw() {
   } else {
     cutSceneFind();
   }
+  
   //surface.setTitle(String.format("%.1f", frameRate));
   
   // Uncomment for grid lattice

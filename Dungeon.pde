@@ -32,17 +32,17 @@ class Dungeon {
       max.x, max.y);
 
     // Run through values of map, draw room.
-    //for (Room room : rooms.values()) {
-    //  room.drawRoom(r);
-    //}
+    for (Room room : rooms.values()) {
+      room.drawRoom(r);
+    }
     
     // Optimisation, draw only current room and direct neighbours
-    for (int i = -1; i <= 1; i++) {
-       for (int j = -1; j <= 1; j++) {
-         Room room = getRoom(new PVector(player.position.x + i * width, player.position.y + j * height));
-         if (room != null) room.drawRoom(r);
-       }
-    }
+    //for (int i = -1; i <= 1; i++) {
+    //   for (int j = -1; j <= 1; j++) {
+    //     Room room = getRoom(new PVector(player.position.x + i * width, player.position.y + j * height));
+    //     if (room != null) room.drawRoom(r);
+    //   }
+    //}
     
     r.popStyle();
   }
@@ -84,8 +84,8 @@ class Dungeon {
       //curr = Coord.add(curr, new Coord(0, 1));
       //rooms.put(curr, new Room(map0));
       
-      curr = Coord.add(curr, new Coord(1, 1));
-      rooms.put(curr, new Room(map7));
+      //curr = Coord.add(curr, new Coord(1, 1));
+      //rooms.put(curr, new Room(map7));
       
       
       // Rooms for sacrifice 2

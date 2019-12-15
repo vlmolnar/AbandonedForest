@@ -80,6 +80,7 @@ class Dialogue {
     roomLoc = dungeon.getRoom(player.position).loc;
     if (player.gravity > 0) player.reverseGravity();
     if (sceneNum == 1 && script.isEmpty()) fillDialogue1();
+    if (sceneNum == 2 && script.isEmpty()) fillDialogue2();
     if (spacePressed && millis() - lastSpaceTime > 500) {
       lastSpaceTime = millis();
       script.remove(0);
@@ -93,8 +94,6 @@ class Dialogue {
   }
   
   void fillDialogue1 () {
-    //script.add(new ScriptSpeak(Speaker.FOX, ""));
-    //script.add(new ScriptSpeak(Speaker.CROW, ""));
     script.add(new ScriptSpeak(Speaker.CROW, "So my eyes did not betray me! It is not every day that this wretched place has visitors."));
     script.add(new ScriptSpeak(Speaker.FOX, "Greetings to you too!"));
     script.add(new ScriptSpeak(Speaker.CROW, "What brings you to the Abandoned Forest, Little One?"));   
@@ -105,9 +104,43 @@ class Dialogue {
     script.add(new ScriptSpeak(Speaker.FOX, "You can’t scare me away! I have a duty to fulfil and my tribe put their faith in me."));
     script.add(new ScriptSpeak(Speaker.CROW, "Do you even know what is needed to save this land?"));
     script.add(new ScriptSpeak(Speaker.FOX, "I need to find the three pedestals and present a sacrifice on each of them. My ancestors’ spirits said I’ll know what to do when I get there."));
-    script.add(new ScriptSpeak(Speaker.CROW, "Heh, foolish of you to trust them so blindly."));
-    script.add(new ScriptSpeak(Speaker.CROW, "But you’ve piqued my interest… allow me to see your journey through to the bitter end!"));
+    script.add(new ScriptSpeak(Speaker.CROW, "Heh, you place your trust in them so blindly."));
+    script.add(new ScriptSpeak(Speaker.CROW, "But you’ve piqued my interest… allow me to see your journey through to the end. Bitter though it may be."));
     
+}
+
+void fillDialogue2() {
+  //script.add(new ScriptSpeak(Speaker.FOX, ""));
+  //script.add(new ScriptSpeak(Speaker.CROW, ""));
+  script.add(new ScriptSpeak(Speaker.CROW, "Ah, so you found your way here! Impressive!"));
+  script.add(new ScriptSpeak(Speaker.FOX, "It was a long journey… but I’ve reached the pedestal at last."));
+  script.add(new ScriptSpeak(Speaker.FOX, "Tell me, how did this place become so hostile? Why are those odd animals attacking me?"));
+  script.add(new ScriptSpeak(Speaker.CROW, "Those are not animals. They are remnants of the Old World."));
+  script.add(new ScriptSpeak(Speaker.CROW, "Long ago, a single species ruled the Forest. They tore it down and built it up according to their will."));
+  script.add(new ScriptSpeak(Speaker.CROW, "They were not strong but they surpassed all others in intelligence. They created machinery that moves on its own. But it has no will of its own, it just attacks all it sees mindlessly."));
+  script.add(new ScriptSpeak(Speaker.FOX, "No will of its own… no mind."));
+  script.add(new ScriptSpeak(Speaker.CROW, "That’s right. And if you pursue this task of yours, you are sure to face more danger."));
+  script.add(new ScriptSpeak(Speaker.FOX, "I see… but still I must press on. "));
+  script.add(new ScriptSpeak(Speaker.FOX, "I just need to make the sacrifice now. But I don’t know how."));
+  script.add(new ScriptSpeak(Speaker.CROW, "Heh! If you don’t even know how, maybe you aren’t up for the task."));
+  script.add(new ScriptSpeak(Speaker.CROW, "Go home while you still remember how, Little One!"));
+  script.add(new ScriptSpeak(Speaker.FOX, "No! I will make the sacrifice!"));
+  //Sacrifice animation?
+  script.add(new ScriptSpeak(Speaker.FOX, "What was that?"));
+  script.add(new ScriptSpeak(Speaker.CROW, "The Forest has accepted your sacrifice. You gave your mind to save the land."));
+  script.add(new ScriptSpeak(Speaker.FOX, "I gave… my mind? But how could that be when my thoughts are still clear?"));
+  script.add(new ScriptSpeak(Speaker.CROW, "Think back… where did you come from and what is your purpose here, Little One?"));
+  script.add(new ScriptSpeak(Speaker.FOX, "I came from my tribe’s land to save the Forest."));
+  script.add(new ScriptSpeak(Speaker.CROW, "And where is that land?"));
+  script.add(new ScriptSpeak(Speaker.FOX, "It’s out there… somewhere. I’m sure of it."));
+  script.add(new ScriptSpeak(Speaker.CROW, "You just arrived to this Forest but already forgot about your home?"));
+  script.add(new ScriptSpeak(Speaker.FOX, "That can’t be… and yet I don’t remember."));
+  script.add(new ScriptSpeak(Speaker.CROW, "Do you have any friends, any family waiting for you?"));
+  script.add(new ScriptSpeak(Speaker.FOX, "I don’t know. I wonder if I do…"));
+  script.add(new ScriptSpeak(Speaker.CROW, "Maybe if you did, they wouldn’t have sent you here."));
+  script.add(new ScriptSpeak(Speaker.CROW, "Get away while you still can. The Abandoned Forest has swallowd your mind, but it has yet to swallow the rest of you."));
+  script.add(new ScriptSpeak(Speaker.FOX, "No! Even with my memories lost, I know that my task was important."));
+  script.add(new ScriptSpeak(Speaker.CROW, "You’re just a wondering body now, with no mind of your own. Fulfilling a purpose, but not understanding it. Show me if you’re any different from that machinery of old."));
 }
   
 }
