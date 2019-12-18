@@ -110,8 +110,6 @@ class Dialogue {
 }
 
 void fillDialogue2() {
-  //script.add(new ScriptSpeak(Speaker.FOX, ""));
-  //script.add(new ScriptSpeak(Speaker.CROW, ""));
   script.add(new ScriptSpeak(Speaker.CROW, "Ah, so you found your way here! Impressive!"));
   script.add(new ScriptSpeak(Speaker.FOX, "It was a long journey… but I’ve reached the pedestal at last."));
   script.add(new ScriptSpeak(Speaker.FOX, "Tell me, how did this place become so hostile? Why are those odd animals attacking me?"));
@@ -141,6 +139,89 @@ void fillDialogue2() {
   script.add(new ScriptSpeak(Speaker.CROW, "Get away while you still can. The Abandoned Forest has swallowd your mind, but it has yet to swallow the rest of you."));
   script.add(new ScriptSpeak(Speaker.FOX, "No! Even with my memories lost, I know that my task was important."));
   script.add(new ScriptSpeak(Speaker.CROW, "You’re just a wondering body now, with no mind of your own. Fulfilling a purpose, but not understanding it. Show me if you’re any different from that machinery of old."));
+  script.add(new ScriptSpeak(Speaker.NARRATOR, "\nYou sacrificed your mind to the Forest"));
+  script.add(new ScriptSpeak(Speaker.NARRATOR, "\nYou lost the ability to reverse gravity"));
+
+}
+
+void fillDialogue3() {
+  //script.add(new ScriptSpeak(Speaker.FOX, ""));
+  //script.add(new ScriptSpeak(Speaker.CROW, ""));
+  script.add(new ScriptSpeak(Speaker.FOX, "At last, the pedestal!"));
+  script.add(new ScriptSpeak(Speaker.CROW, "Took you long enough. I was just wondering if you dropped dead on the way!"));
+  script.add(new ScriptSpeak(Speaker.CROW, "So, how does it feel to be without a mind?"));
+  script.add(new ScriptSpeak(Speaker.FOX, "With each step I take, I feel more and more lost."));
+  script.add(new ScriptSpeak(Speaker.FOX, "On my way here, rain poured from the sky. But it wasn’t water falling down… it burnt, like fire."));
+  script.add(new ScriptSpeak(Speaker.CROW, "It was water falling, but it was also something else… poisoned rain."));
+  script.add(new ScriptSpeak(Speaker.CROW, "It’s from the fires of Old World. The smoke corrupted even the skies that once held pure water."));
+  script.add(new ScriptSpeak(Speaker.CROW, "The water creatures are all gone. When the sky weeps, all of us on the ground weep with it now."));
+  script.add(new ScriptSpeak(Speaker.FOX, "Tell me, why did I come to this clearing? What… was I looking for?"));
+  script.add(new ScriptSpeak(Speaker.CROW, "The corruption got to your brain sooner than I thought. But the corruption gets everyone, it’s only a matter of time."));
+  script.add(new ScriptSpeak(Speaker.CROW, "Go home while you still have legs to take you, Little One!"));
+  script.add(new ScriptSpeak(Speaker.FOX, "No… I can’t go home, can I?"));
+  script.add(new ScriptSpeak(Speaker.FOX, "I will not leave until I fulfil my task. I will stay here until I remember what it is!"));
+  //Sacrifice
+  script.add(new ScriptSpeak(Speaker.FOX, "What was that?"));
+  script.add(new ScriptSpeak(Speaker.CROW, "The forest has accepted your sacrifice. You gave your body to save the land."));
+  script.add(new ScriptSpeak(Speaker.FOX, "I gave… my body? But how can that be if I can still see it?"));
+  script.add(new ScriptSpeak(Speaker.CROW, "You can still see it, but can you feel the ground beneath your feet?"));
+  script.add(new ScriptSpeak(Speaker.FOX, "Ah, it hurts when I look down… but how can I be in pain when my body has gone numb? What do I do now, how do I go on?"));
+  script.add(new ScriptSpeak(Speaker.CROW, "Maybe you shouldn’t go on. Or maybe you should move slowly, where the paths are easier to take. If you flow where life takes you, you can be just like the toxic water."));
+  script.add(new ScriptSpeak(Speaker.NARRATOR, "\nYou sacrificed your body to the Forest"));
+  script.add(new ScriptSpeak(Speaker.NARRATOR, "\nYou lost the ability to dash"));
+}
+
+void fillDialogue4() {
+  //script.add(new ScriptSpeak(Speaker.FOX, ""));
+  //script.add(new ScriptSpeak(Speaker.CROW, ""));
+  script.add(new ScriptSpeak(Speaker.FOX, "Here it is, where my journey comes to an end."));
+  script.add(new ScriptSpeak(Speaker.FOX, "Are you there, Crow? I can’t see too well in this darkness…"));
+  script.add(new ScriptSpeak(Speaker.CROW, "I am here. How was your journey, Little One who lacks a mind or body?"));
+  script.add(new ScriptSpeak(Speaker.FOX, "It was agonising. I am in so much pain, there’s not a moment I spend without it."));
+  script.add(new ScriptSpeak(Speaker.FOX, "I don’t remember my purpose. My legs carried me here, but I have no memories of who I am, or why I’m here."));
+  script.add(new ScriptSpeak(Speaker.FOX, "No… my legs did not carry me. It was the Forest that guided me!"));
+  script.add(new ScriptSpeak(Speaker.FOX, "I’m not the only one in pain. The Forest is the one screaming. The voices of all creatures, crying out in unison.");
+  script.add(new ScriptSpeak(Speaker.FOX, "Is that what you wanted to show me, cruel Gods of the Forest?"));
+  //Room lights up
+  script.add(new ScriptSpeak(Speaker.CROW, "Welcome to the final sacrifice, Little One. Many have been on the journey you took, but few made it this far."));
+  script.add(new ScriptSpeak(Speaker.FOX, "What is this place? It’s dark and cold… hard to imagine anyone surviving here."));
+  script.add(new ScriptSpeak(Speaker.CROW, "When the fires and machinery of the Old World made the surface uninhabitable, we didn’t have much choice but to move underground."));
+  script.add(new ScriptSpeak(Speaker.FOX, "But there’s barely anything here… how do you survive without food and water?"));
+  script.add(new ScriptSpeak(Speaker.CROW, "It’s true, there isn’t much here to help sustain a life. But that itself is our salvation. Countless have fallen to this curse, but we few remain standing. Why do you think that is?"));
+  script.add(new ScriptSpeak(Speaker.CROW, "The answer is cannibalism. We eat those who fall along the way. Friends, enemies, family, those ties no longer matter in a world such as this."));
+  script.add(new ScriptSpeak(Speaker.CROW, "Proud animals like your kind abandoned this place long ago. So did the species of Old. We’re all that remain, the wretched and the twisted. This is the world your tribe tossed you aside for."));
+  script.add(new ScriptSpeak(Speaker.CROW, "That long journey, the sacrifices, it was all to tire you out. You don’t have the energy to fight back anymore, do you? "));
+  script.add(new ScriptSpeak(Speaker.CROW, "Tell me Little One, is this the world you sought to save? Is this the truth you want to protect so?"));
+  script.add(new ScriptSpeak(Speaker.CROW, "Run while you have your sanity, Little One!"));
+  //Choice
+}
+
+void fillEndingSacrifice() {
+  script.add(new ScriptSpeak(Speaker.FOX, "Thank you for seeing my journey through the end. I may not remember it, but I hope you will."));
+  script.add(new ScriptSpeak(Speaker.FOX, "With the last remnant of my sanity, I sacrifice my soul to the Forest!"));
+  //Sacrifice
+  script.add(new ScriptSpeak(Speaker.NARRATOR, "\nYou sacrificed your soul to the Forest"));
+  script.add(new ScriptSpeak(Speaker.NARRATOR, "\nYou lost the ability to move"));
+  script.add(new ScriptSpeak(Speaker.CROW, "Unbelievable! You passed all the trials of the Forest. Even after looking into the abyss and being confronted with own foolishness, you made the sacrifice. Heh, maybe you’re the insane one here, and not this Forest!"));
+  script.add(new ScriptSpeak(Speaker.FOX, "…"));
+  script.add(new ScriptSpeak(Speaker.CROW, "Forgotten how to speak, have you? Losing your soul does take a toll on you. But do not fret, you won’t need a soul where you’re going."));
+  script.add(new ScriptSpeak(Speaker.CROW, "You have honoured the promise your ancestors made to us, so we, Forest Gods shall honour your sacrifice. Let the Forest prosper, let it be your cradle. Have a peaceful eternal rest, Little One! "));
+  //Crows flock Fox, screen turns black
+}
+
+void fillEndingAbandon() {
+  script.add(new ScriptSpeak(Speaker.FOX, "No…  my tribe betrayed me?"));
+  script.add(new ScriptSpeak(Speaker.FOX, "This Forest is beyond salvation, isn’t it Crow? The corruption runs deep, all the way to the heart of its residents. Even I can feel its weight after such a short time spent here. "));
+  script.add(new ScriptSpeak(Speaker.FOX, "I was sent a treat to sate your hunger. There never was a greater cause. Throw aside one for the sake of the many so the tribe can live on, unbothered by your hunger."));
+  script.add(new ScriptSpeak(Speaker.CROW, "So that’s the answer you found. But what can you do with a broken body and mind?"));
+  script.add(new ScriptSpeak(Speaker.FOX, "I’m more than some old machinery or mass of water. I won’t let you have my soul."));
+  script.add(new ScriptSpeak(Speaker.FOX, "Even a step away from here is further than I could get by giving up here."));
+  script.add(new ScriptSpeak(Speaker.CROW, "You’re a curious creature, Little One. So close to reaching your goal only to throw it all away."));
+  script.add(new ScriptSpeak(Speaker.CROW, "I hope you don’t regret this. Now go, leave the Forest before the corruption gets to you."));
+  script.add(new ScriptSpeak(Speaker.FOX, "You’re not going to eat me?"));
+  script.add(new ScriptSpeak(Speaker.CROW, "We are the Gods of the Forest. We have no business with the living and you’re clearly not ready to die."));
+  script.add(new ScriptSpeak(Speaker.CROW, "Have a long life filled with struggles, Little One. And don’t forget what this Forest taught you."));
+  //Screen turns black
 }
   
 }
