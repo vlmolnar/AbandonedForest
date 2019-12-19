@@ -11,6 +11,7 @@ class Dialogue {
   boolean crowMoving = false;
   PImage dialogueBox = loadImage("dialogue_box.png");
   PImage choiceBox = loadImage("choice_box.png");
+  PImage foxProfile, crowProfile;
   ArrayList<ScriptSpeak> script = new ArrayList<ScriptSpeak>();
   long lastSpaceTime = 0;
   PVector roomLoc = new PVector(0, 0);
@@ -24,6 +25,8 @@ class Dialogue {
     cutScene2Complete = false;
     cutScene3Complete = false;
     cutScene4Complete = false;
+    foxProfile = flipImgVertical(loadImage("fox_profile.png"));
+    crowProfile = flipImgVertical(loadImage("crow_profile.png"));
   }
 
   
@@ -56,6 +59,13 @@ class Dialogue {
     textSize(30);
     text(breakString(text), roomLoc.x - 640, -1 * roomLoc.y +  -1 * height/2 + 110);
     popMatrix();
+    
+    //Portrait
+    if (speaker == Speaker.FOX) {
+      image(foxProfile, roomLoc.x - width/2, roomLoc.y + 190);
+    } else if (speaker == Speaker.CROW) {
+      image(crowProfile, roomLoc.x - width/2, roomLoc.y + 190);
+    }
   }
   
   void showChoice(boolean leftArrow, boolean rightArrow) {
@@ -100,7 +110,7 @@ class Dialogue {
     }
   }
   
-  void cutScene(boolean spacePressed, boolean leftArrow, boolean rightArrow) {
+  void cutScene(boolean spacePressed, boolean enterPressed, boolean returnPressed, boolean leftArrow, boolean rightArrow) {
     roomLoc = dungeon.getRoom(player.position).loc;
     if (player.gravity > 0) player.reverseGravity();
     
@@ -109,7 +119,7 @@ class Dialogue {
     else if (!cutScene3Complete && script.isEmpty()) fillDialogue3();
     else if (!cutScene4Complete && script.isEmpty()) fillDialogue4();
     
-    if (!spaceLock && spacePressed && millis() - lastSpaceTime > 500) {
+    if (!spaceLock && (spacePressed || enterPressed || returnPressed) && millis() - lastSpaceTime > 500) {
       lastSpaceTime = millis();
       script.remove(0);
       
@@ -133,6 +143,7 @@ class Dialogue {
           cutScene4Complete = true;
           saveToFile();
           gameState = GameState.TITLE;
+          newGameSetup();
           return;
         }
         cutSceneOn = false;

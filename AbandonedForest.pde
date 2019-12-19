@@ -26,6 +26,20 @@ void setup() {
   
   gameState = GameState.TITLE;
   
+  newGameSetup();
+  
+  
+  minim = new Minim(this);
+  //music = minim.loadFile("The Midnight Hour.mp3");
+  //music.loop();
+  //int buffersize = 256;
+  //jumpSFX = minim.loadFile("swish.wav");
+  //jumpSFX.play();
+  //damageSFX = minim.loadFile("hurt.wav");
+  //damageSFX.play();
+}
+
+void newGameSetup() {
   surface.setTitle("Abandoned Forest");
   
   dialogue = new Dialogue();
@@ -57,15 +71,6 @@ void setup() {
   dungeon = new Dungeon(width, height);  
   
   cam.lookAt(dungeon, player.position, pressed, UP, DOWN, true);
-  
-  minim = new Minim(this);
-  //music = minim.loadFile("The Midnight Hour.mp3");
-  //music.loop();
-  //int buffersize = 256;
-  //jumpSFX = minim.loadFile("swish.wav");
-  //jumpSFX.play();
-  //damageSFX = minim.loadFile("hurt.wav");
-  //damageSFX.play();
 }
 
 PVector checkPointCoord() {
@@ -157,7 +162,7 @@ void drawGame() {
   checkPointFind();
   
   if (dialogue.cutSceneOn) {
-    dialogue.cutScene(pressed[32], pressed[LEFT], pressed[RIGHT]);
+    dialogue.cutScene(pressed[32], pressed[ENTER], pressed[RETURN], pressed[LEFT], pressed[RIGHT]);
   } else {
     cutSceneFind();
   }
@@ -251,6 +256,23 @@ void loadFromFile() {
  
     }
   }
+  
+   // Slighty modified from https://stackoverflow.com/questions/29334348/processing-mirror-image-over-x-axis
+ PImage flipImgHorizontal(PImage img) {
+   PImage flipped = createImage(img.width, img.height, ARGB);
+   for(int x = 0 ; x < flipped.width; x++) {                            //loop through each column
+      flipped.set(flipped.width-x-1, 0, img.get(x, 0, 1, img.height));  //copy a column in reverse x order
+    }
+    return flipped;
+ }
+ 
+ PImage flipImgVertical(PImage img) {
+   PImage flipped = createImage(img.width, img.height, ARGB);
+   for(int y = 0 ; y < flipped.height; y++) {
+      flipped.set(0, flipped.height-y-1, img.get(0, y, img.width, 1));
+    }
+    return flipped;
+ }
 
 void keyPressed() {
   pressed[keyCode] = true;

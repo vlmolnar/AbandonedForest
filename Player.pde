@@ -53,10 +53,6 @@ class Player{
    if(abs(velocity.y + moveY) > 10) moveY = moveY/abs(moveY) * 10;
    if(abs(velocity.x + moveX) < 8 && abs(velocity.y + moveY) < 10) {
    this.velocity.add(new PVector(moveX, moveY));
-   //if (abs(velocity.x + moveX) > 8) moveX = moveX/abs(moveX) * 8; 
-   //if(abs(velocity.y + moveY) > 10) moveY = moveY/abs(moveY) * 10;
-   //if(abs(velocity.x + moveX) < 8 && abs(velocity.y + moveY) < 10) {
-   //this.velocity.add(new PVector(moveX, moveY));
    }
  
  }
@@ -161,35 +157,11 @@ class Player{
    PVector pos5 = new PVector(pos.x + foxImg.width/2, pos.y);
    PVector pos6 = new PVector(pos.x + foxImg.width/2, pos.y + foxImg.height);
    
-   
-   //boolean leftCollide = pointCollision(pos3, dungeon.getRoom(pos3)) || pointCollision(pos4, dungeon.getRoom(pos4));
-   //boolean rightCollide = pointCollision(pos2, dungeon.getRoom(pos2)) && pointCollision(pos3, dungeon.getRoom(pos3));
-   //boolean topCollide = pointCollision(pos3, dungeon.getRoom(pos3)) || pointCollision(pos4, dungeon.getRoom(pos4)) || pointCollision(pos6, dungeon.getRoom(pos6));
-   //boolean bottomCollide = pointCollision(pos, dungeon.getRoom(pos)) || pointCollision(pos2, dungeon.getRoom(pos2)) || pointCollision(pos5, dungeon.getRoom(pos5));
-   
-   //if ((leftCollide && velocity.x < 0) || (rightCollide && velocity.x > 0)) velocity.x = 0;
-   //if ((topCollide && velocity. y > 0) || (bottomCollide && velocity.y < 0)) velocity.y = 0;
-   
    // Collision
    return (pointCollision(pos, dungeon.getRoom(pos)) | pointCollision(pos2, dungeon.getRoom(pos2))
        | pointCollision(pos3, dungeon.getRoom(pos3)) | pointCollision(pos4, dungeon.getRoom(pos4))
        | pointCollision(pos5, dungeon.getRoom(pos5)) | pointCollision(pos6, dungeon.getRoom(pos6)));
-         
-         //if() {
-         //Collision with ground
-       //  if (pointCollision(new PVector(pos3.x, pos3.y - 50), dungeon.getRoom(pos3)) || pointCollision(pos4, dungeon.getRoom(pos4)) || pointCollision(pos6, dungeon.getRoom(pos6))) {
-       //    System.out.println("gravity OFF!");
-       //    isOnGround = true;
-       //  } else {
-       //    System.out.println("gravity ON!");
-       //    isOnGround = false;
-       //}
-       
-    //   return true;
-    //}
-    //System.out.println("gravity ON2!");
-    //isOnGround = false;
-    //return false;
+
  }
  
  boolean pointCollision(PVector pos, Room room) {
@@ -200,9 +172,6 @@ class Player{
    if (gridY > 19) gridY = 19;
    if (gridX < 0) gridX = 0;  // Prevents array out of bounds
    if (gridY < 0) gridY = 0;
-   //System.out.println("pos: " + pos.x + "  " + pos.y);
-   //System.out.println("room: " + room.loc.x + "  " + room.loc.y);
-   //System.out.println("grid: " + gridX + "  " + gridY);
    
    if (isImmune && millis() - lastDamageTime > 2000) {
      isImmune = false;

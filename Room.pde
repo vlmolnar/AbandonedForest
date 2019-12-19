@@ -56,10 +56,10 @@ class Room {
           //r.vertex(loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
           //r.endShape(CLOSE);
           image(grass, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
-        } else if (grid[i][j] == 2) { // Upwards pointing spile
+        } else if (grid[i][j] == 2) { // Upwards pointing spike
           image(spikeUp, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
         } else if (grid[i][j] == 3) { // Downwards pointing spike
-          image(spikeDown, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
+          image(spikeDown, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE - 10);
         } else if (grid[i][j] == 4) { //Checkpoint tree
           image(tree, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
         } else if (grid[i][j] == 5 && !dialogue.cutScene2Complete) { //Progress block until first sacrifice
