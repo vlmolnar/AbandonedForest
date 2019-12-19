@@ -16,6 +16,8 @@ class Player{
   boolean isOnGround = true;
   boolean lockJump = false;
   boolean isImmune = false;
+  boolean gravitySacrificed = false;
+  boolean dashSacrificed = false;
   
  Player(float x, float y, float velX, float velY) {
    this.position = new PVector(x, y);
@@ -96,7 +98,7 @@ class Player{
          }
        }  
        
-       if (pressed[leftDash] && millis() - lastDashTime > 500 ) {
+       if (!dashSacrificed && pressed[leftDash] && millis() - lastDashTime > 500 ) {
          lastDashTime = millis();
          faceRight = false;
          if (imgRight) {
@@ -106,7 +108,7 @@ class Player{
          velocity = new PVector(-10, 0);
        }
        
-       if (pressed[rightDash] && millis() - lastDashTime > 500) {
+       if (!dashSacrificed && pressed[rightDash] && millis() - lastDashTime > 500) {
          lastDashTime = millis();
          faceRight = true;
          if (!imgRight) {
@@ -116,7 +118,7 @@ class Player{
          velocity = new PVector(10, 0);
        }
        
-       if (pressed[spaceKey] && isOnGround) {
+       if (!gravitySacrificed && pressed[spaceKey] && isOnGround) {
            reverseGravity();
        }
     }
@@ -227,7 +229,10 @@ class Player{
       }
      return true;
    }
-   if (room.grid[gridY][gridX] == 1) {  // Wall
+   // Wall
+   if (room.grid[gridY][gridX] == 1 
+     || (!dialogue.cutScene2Complete && room.grid[gridY][gridX] == 5) 
+     || (!dialogue.cutScene3Complete && room.grid[gridY][gridX] == 6)) {
      return true;
    }
    return false;

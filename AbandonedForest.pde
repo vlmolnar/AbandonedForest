@@ -31,6 +31,17 @@ void setup() {
   PVector startPos = checkPointCoord();
   player = new Player(startPos.x, startPos.y, 0, 0);
   
+  if (dialogue.cutScene2Complete) {
+    player.maxLife -= 1;
+    player.lives = player.maxLife;
+    player.gravitySacrificed = true;
+  }
+  if (dialogue.cutScene3Complete) {
+    player.maxLife -= 1;
+    player.lives = player.maxLife;
+    player.dashSacrificed = true;
+  }
+  
   renderer = (PGraphics2D)g;
   cam = new DungeonCam(renderer);
   dungeon = new Dungeon(width, height);  
@@ -118,7 +129,7 @@ void draw() {
   checkPointFind();
   
   if (dialogue.cutSceneOn) {
-    dialogue.cutScene1(1, pressed[32]);
+    dialogue.cutScene(pressed[32]);
   } else {
     cutSceneFind();
   }
@@ -139,16 +150,26 @@ void cutSceneFind() {
    Room room = dungeon.getRoom(player.position);
    if (!dialogue.cutScene1Complete && room.loc.equals(new PVector(1800,0)) && player.position.x > room.loc.x - 500) {
      dialogue.cutSceneOn = true;
+   } else if (!dialogue.cutScene2Complete && room.loc.equals(new PVector(3600,2000)) && player.position.x > room.loc.x + 200 && player.position.y > room.loc.y) {
+     dialogue.cutSceneOn = true;
    }
 }
 
 void checkPointFind() {
   Room room = dungeon.getRoom(player.position);
+  //System.out.println(room.loc.x + ", " + room.loc.y);
    if (room.loc.equals(new PVector(1800,0))
-         && player.position.x > room.loc.x - 400 && player.position.x < room.loc.x + 100 && player.position.y < room.loc.y) {
+         && player.position.x > room.loc.x - 500 && player.position.x < room.loc.x + 100 && player.position.y < room.loc.y) {
      player.lives = player.maxLife;
      if (checkPoint != CheckPoint.POINT1) {
        checkPoint = CheckPoint.POINT1;
+       saveToFile();
+     }
+   } else if (room.loc.equals(new PVector(3600,2000))
+         && player.position.x > room.loc.x + 200 && player.position.y > room.loc.y) {
+     player.lives = player.maxLife;
+     if (checkPoint != CheckPoint.POINT2) {
+       checkPoint = CheckPoint.POINT2;
        saveToFile();
      }
    }
@@ -168,7 +189,7 @@ void saveToFile() {
 void loadFromFile() {
     File f = new File(dataPath("save.json"));
     if (f.exists()) {
-      json = loadJSONObject("save.json");
+      json = loadJSONObject(dataPath("save.json"));
       checkPoint = intToCheckPoint(json.getInt("checkPoint"));
       dialogue.cutScene1Complete = (json.getBoolean("cutScene1Complete"));
       dialogue.cutScene2Complete = (json.getBoolean("cutScene2Complete"));

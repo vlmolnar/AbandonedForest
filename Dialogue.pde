@@ -49,10 +49,10 @@ class Dialogue {
     pushMatrix();
     textSize(40);
     scale(1, -1);  // Reversed y axis
-    text(name, roomLoc.x - 640, roomLoc.y + -1 * height/2 + 60);
+    text(name, roomLoc.x - 640, -1 * roomLoc.y + -1 * height/2 + 60);
     fill(225);
     textSize(30);
-    text(breakString(text), roomLoc.x - 640, roomLoc.y +  -1 * height/2 + 110);
+    text(breakString(text), roomLoc.x - 640, -1 * roomLoc.y +  -1 * height/2 + 110);
     popMatrix();
   }
   
@@ -76,17 +76,30 @@ class Dialogue {
     }
   }
   
-  void cutScene1(int sceneNum, boolean spacePressed) {
+  void cutScene(boolean spacePressed) {
     roomLoc = dungeon.getRoom(player.position).loc;
     if (player.gravity > 0) player.reverseGravity();
-    if (sceneNum == 1 && script.isEmpty()) fillDialogue1();
-    if (sceneNum == 2 && script.isEmpty()) fillDialogue2();
+    if (!cutScene1Complete && script.isEmpty()) fillDialogue1();
+    else if (!cutScene2Complete && script.isEmpty()) fillDialogue2();
+    else if (!cutScene3Complete && script.isEmpty()) fillDialogue3();
+    else if (!cutScene4Complete && script.isEmpty()) fillDialogue4();
     if (spacePressed && millis() - lastSpaceTime > 500) {
+      System.out.println("click");
       lastSpaceTime = millis();
       script.remove(0);
+      
+      if (!script.isEmpty() && script.get(0).speaker.equals(Speaker.NARRATOR) && script.get(0).text.equals("sacrifice")) {
+        player.maxLife -= 1;
+        player.lives = player.maxLife;
+        script.remove(0);
+      }
       if (script.isEmpty()) {
-        cutScene1Complete = true;
+        if (!cutScene1Complete) cutScene1Complete = true;
+        else if (!cutScene2Complete) cutScene2Complete = true;
+        else if (!cutScene3Complete) cutScene3Complete = true;
+        else if (!cutScene4Complete) cutScene4Complete = true;
         cutSceneOn = false;
+        saveToFile();
         return;
       }
     }
@@ -94,6 +107,8 @@ class Dialogue {
   }
   
   void fillDialogue1 () {
+    System.out.println("dialogue 1");
+    script = new ArrayList<ScriptSpeak>();
     script.add(new ScriptSpeak(Speaker.CROW, "So my eyes did not betray me! It is not every day that this wretched place has visitors."));
     script.add(new ScriptSpeak(Speaker.FOX, "Greetings to you too!"));
     script.add(new ScriptSpeak(Speaker.CROW, "What brings you to the Abandoned Forest, Little One?"));   
@@ -110,6 +125,8 @@ class Dialogue {
 }
 
 void fillDialogue2() {
+  System.out.println("dialogue 2");
+  script = new ArrayList<ScriptSpeak>();
   script.add(new ScriptSpeak(Speaker.CROW, "Ah, so you found your way here! Impressive!"));
   script.add(new ScriptSpeak(Speaker.FOX, "It was a long journey… but I’ve reached the pedestal at last."));
   script.add(new ScriptSpeak(Speaker.FOX, "Tell me, how did this place become so hostile? Why are those odd animals attacking me?"));
@@ -123,6 +140,7 @@ void fillDialogue2() {
   script.add(new ScriptSpeak(Speaker.CROW, "Heh! If you don’t even know how, maybe you aren’t up for the task."));
   script.add(new ScriptSpeak(Speaker.CROW, "Go home while you still remember how, Little One!"));
   script.add(new ScriptSpeak(Speaker.FOX, "No! I will make the sacrifice!"));
+  script.add(new ScriptSpeak(Speaker.NARRATOR, "sacrifice"));
   //Sacrifice animation?
   script.add(new ScriptSpeak(Speaker.FOX, "What was that?"));
   script.add(new ScriptSpeak(Speaker.CROW, "The Forest has accepted your sacrifice. You gave your mind to save the land."));
@@ -145,8 +163,8 @@ void fillDialogue2() {
 }
 
 void fillDialogue3() {
-  //script.add(new ScriptSpeak(Speaker.FOX, ""));
-  //script.add(new ScriptSpeak(Speaker.CROW, ""));
+    System.out.println("dialogue 3");
+    script = new ArrayList<ScriptSpeak>();
   script.add(new ScriptSpeak(Speaker.FOX, "At last, the pedestal!"));
   script.add(new ScriptSpeak(Speaker.CROW, "Took you long enough. I was just wondering if you dropped dead on the way!"));
   script.add(new ScriptSpeak(Speaker.CROW, "So, how does it feel to be without a mind?"));
@@ -161,6 +179,7 @@ void fillDialogue3() {
   script.add(new ScriptSpeak(Speaker.FOX, "No… I can’t go home, can I?"));
   script.add(new ScriptSpeak(Speaker.FOX, "I will not leave until I fulfil my task. I will stay here until I remember what it is!"));
   //Sacrifice
+  script.add(new ScriptSpeak(Speaker.NARRATOR, "sacrifice"));
   script.add(new ScriptSpeak(Speaker.FOX, "What was that?"));
   script.add(new ScriptSpeak(Speaker.CROW, "The forest has accepted your sacrifice. You gave your body to save the land."));
   script.add(new ScriptSpeak(Speaker.FOX, "I gave… my body? But how can that be if I can still see it?"));
@@ -172,15 +191,15 @@ void fillDialogue3() {
 }
 
 void fillDialogue4() {
-  //script.add(new ScriptSpeak(Speaker.FOX, ""));
-  //script.add(new ScriptSpeak(Speaker.CROW, ""));
+  System.out.println("dialogue 4");
+  script = new ArrayList<ScriptSpeak>();
   script.add(new ScriptSpeak(Speaker.FOX, "Here it is, where my journey comes to an end."));
   script.add(new ScriptSpeak(Speaker.FOX, "Are you there, Crow? I can’t see too well in this darkness…"));
   script.add(new ScriptSpeak(Speaker.CROW, "I am here. How was your journey, Little One who lacks a mind or body?"));
   script.add(new ScriptSpeak(Speaker.FOX, "It was agonising. I am in so much pain, there’s not a moment I spend without it."));
   script.add(new ScriptSpeak(Speaker.FOX, "I don’t remember my purpose. My legs carried me here, but I have no memories of who I am, or why I’m here."));
   script.add(new ScriptSpeak(Speaker.FOX, "No… my legs did not carry me. It was the Forest that guided me!"));
-  script.add(new ScriptSpeak(Speaker.FOX, "I’m not the only one in pain. The Forest is the one screaming. The voices of all creatures, crying out in unison.");
+  script.add(new ScriptSpeak(Speaker.FOX, "I’m not the only one in pain. The Forest is the one screaming. The voices of all creatures, crying out in unison."));
   script.add(new ScriptSpeak(Speaker.FOX, "Is that what you wanted to show me, cruel Gods of the Forest?"));
   //Room lights up
   script.add(new ScriptSpeak(Speaker.CROW, "Welcome to the final sacrifice, Little One. Many have been on the journey you took, but few made it this far."));

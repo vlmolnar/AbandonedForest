@@ -1,7 +1,7 @@
 {
   "cutScene3Complete": false,
   "cutScene4Complete": false,
-  "cutScene1Complete": false,
-  "cutScene2Complete": false,
+  "cutScene1Complete": true,
+  "cutScene2Complete": true,
   "checkPoint": 1
 }

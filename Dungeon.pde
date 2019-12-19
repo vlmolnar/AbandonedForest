@@ -90,10 +90,10 @@ class Dungeon {
       
       // Rooms for sacrifice 2
       checkpoint = Coord.add(checkpoint, new Coord(1, 0));
-      rooms.put(checkpoint, new Room(map0));
+      rooms.put(checkpoint, new Room(map7));
       
       curr = Coord.add(checkpoint, new Coord(1, 0));
-      rooms.put(curr, new Room(map0));
+      rooms.put(curr, new Room(map8));
       
       curr = Coord.add(curr, new Coord(1, 0));
       rooms.put(curr, new Room(map0));
@@ -105,8 +105,14 @@ class Dungeon {
       rooms.put(curr, new Room(map0));
       
       //Rooms for sacrifice 3
-      curr = Coord.add(checkpoint, new Coord(1, -1));
-      rooms.put(curr, new Room(map1));
+      curr = Coord.add(checkpoint, new Coord(0, -1));
+      rooms.put(curr, new Room(map0));
+      
+      curr = Coord.add(curr, new Coord(0, -1));
+      rooms.put(curr, new Room(map0));
+      
+      curr = Coord.add(curr, new Coord(0, -1));
+      rooms.put(curr, new Room(map0));
 
       // Update min and max coordinates.
       minx = min(minx, curr.x);
@@ -136,9 +142,10 @@ class Dungeon {
       Room room = entry.getValue();
 
       // Set fill color, location and half scale.
-      room.fill = lerpColor(
-        0xffef3f3f, 0xff3f3fef,
-        rng.nextFloat(), HSB);
+      room.fill = color(213, 213, 213);
+    //  room.fill = lerpColor(
+    //    0xffef3f3f, 0xff3f3fef,
+    //    rng.nextFloat(), HSB);
       room.loc.set(coord.x * w, coord.y * h);
       room.halfScale.set(halfw, halfh);
     }

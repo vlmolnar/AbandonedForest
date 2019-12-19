@@ -3,7 +3,7 @@ class Room {
   PVector halfScale = new PVector(0.5, 0.5);
   color fill = 0xffffffff;
   int[][] grid;
-  PImage spikeUp,spikeDown, grass, tree;
+  PImage spikeUp,spikeDown, grass, tree, vine;
   
   Room(int[][] map) {
     grid = map;
@@ -11,6 +11,7 @@ class Room {
     spikeDown = loadImage("spike.png");
     grass = flipImgVertical(loadImage("grass.png"));
     tree = flipImgVertical(loadImage("tree.png"));
+    vine = flipImgVertical(loadImage("vine.png"));
   }
   
   PImage flipImgVertical(PImage img) {
@@ -55,12 +56,16 @@ class Room {
           //r.vertex(loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
           //r.endShape(CLOSE);
           image(grass, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
-        } else if (grid[i][j] == 2) {
+        } else if (grid[i][j] == 2) { // Upwards pointing spile
           image(spikeUp, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
-        } else if (grid[i][j] == 3) {
+        } else if (grid[i][j] == 3) { // Downwards pointing spike
           image(spikeDown, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
-        } else if (grid[i][j] == 4) {
+        } else if (grid[i][j] == 4) { //Checkpoint tree
           image(tree, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
+        } else if (grid[i][j] == 5 && !dialogue.cutScene2Complete) { //Progress block until first sacrifice
+          image(vine, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
+        } else if (grid[i][j] == 6 && !dialogue.cutScene3Complete) { //Progress block until second sacrifice
+          image(vine, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
         }
       }
     }
