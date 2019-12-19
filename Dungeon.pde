@@ -96,23 +96,23 @@ class Dungeon {
       rooms.put(curr, new Room(map8));
       
       curr = Coord.add(curr, new Coord(1, 0));
-      rooms.put(curr, new Room(map0));
+      rooms.put(curr, new Room(map9));
       
       curr = Coord.add(curr, new Coord(0, -1));
-      rooms.put(curr, new Room(map0));
+      rooms.put(curr, new Room(map10));
       
-      curr = Coord.add(curr, new Coord(1, 0));
-      rooms.put(curr, new Room(map0));
+      //curr = Coord.add(curr, new Coord(1, 0));
+      //rooms.put(curr, new Room(map0));
       
       //Rooms for sacrifice 3
       curr = Coord.add(checkpoint, new Coord(0, -1));
-      rooms.put(curr, new Room(map0));
+      rooms.put(curr, new Room(map11));
       
       curr = Coord.add(curr, new Coord(0, -1));
-      rooms.put(curr, new Room(map0));
+      rooms.put(curr, new Room(map12));
       
       curr = Coord.add(curr, new Coord(0, -1));
-      rooms.put(curr, new Room(map0));
+      rooms.put(curr, new Room(map13));
 
       // Update min and max coordinates.
       minx = min(minx, curr.x);

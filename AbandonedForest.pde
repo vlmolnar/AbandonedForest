@@ -12,7 +12,10 @@ DungeonCam cam;
 PGraphics2D renderer;
 CheckPoint checkPoint;
 Dialogue dialogue;
+GameState gameState;
+PImage titleImg0, titleImg1, titleImg2;
 JSONObject json;
+int lastEnding = 0;  //0 indicates no ending, 1 Sacrifice and 2 Abandon
 
 void setup() {
   //fullScreen(P2D);
@@ -20,6 +23,8 @@ void setup() {
   size(1800, 1000, P2D);
   textureMode(NORMAL);
   textureWrap(REPEAT);
+  
+  gameState = GameState.TITLE;
   
   surface.setTitle("Abandoned Forest");
   
@@ -29,7 +34,12 @@ void setup() {
   
   //checkPoint = CheckPoint.START;
   PVector startPos = checkPointCoord();
+  //player = new Player(3000, -3000, 0, 0);
   player = new Player(startPos.x, startPos.y, 0, 0);
+  
+  titleImg0 = loadImage("title0.jpg");
+  titleImg1 = loadImage("title1.jpg");
+  titleImg2 = loadImage("title2.jpg");
   
   if (dialogue.cutScene2Complete) {
     player.maxLife -= 1;
@@ -104,6 +114,24 @@ CheckPoint intToCheckPoint(int num) {
 }
 
 void draw() {
+  if (gameState == GameState.GAME) {
+    drawGame();
+  } else {
+    //Background changes based on last ending achieved
+    if (lastEnding == 0) background(titleImg0);
+    else if (lastEnding == 1) background(titleImg1);
+    else if(lastEnding == 2) background(titleImg2);
+    fill(252, 154, 8);
+    textSize(40);
+    text("Press SPACE to start game", width/2 + 200, height/2);
+    fill(0);
+    if (pressed[32]) {
+      gameState = GameState.GAME;
+    }
+  }
+}
+
+void drawGame() {
   player.move(pressed, 65, 68, 87, LEFT, RIGHT, 32); //keys a, d, w, <-, ->, SPACE
   cam.lookAt(dungeon, player.position, pressed, UP, DOWN, false);
   background(0xff000000);
@@ -129,7 +157,7 @@ void draw() {
   checkPointFind();
   
   if (dialogue.cutSceneOn) {
-    dialogue.cutScene(pressed[32]);
+    dialogue.cutScene(pressed[32], pressed[LEFT], pressed[RIGHT]);
   } else {
     cutSceneFind();
   }
@@ -152,6 +180,11 @@ void cutSceneFind() {
      dialogue.cutSceneOn = true;
    } else if (!dialogue.cutScene2Complete && room.loc.equals(new PVector(3600,2000)) && player.position.x > room.loc.x + 200 && player.position.y > room.loc.y) {
      dialogue.cutSceneOn = true;
+   } else if (!dialogue.cutScene3Complete && room.loc.equals(new PVector(7200,-1000)) && player.position.x > room.loc.x + 100 && player.position.y < room.loc.y) {
+     dialogue.cutSceneOn = true;
+   } else if (room.loc.equals(new PVector(3600,-3000))
+         && player.position.x > room.loc.x - 300) {
+     dialogue.cutSceneOn = true;
    }
 }
 
@@ -172,17 +205,34 @@ void checkPointFind() {
        checkPoint = CheckPoint.POINT2;
        saveToFile();
      }
+   } else if (room.loc.equals(new PVector(7200,-1000))
+         && player.position.x > room.loc.x + 100 && player.position.y < room.loc.y) {
+     player.lives = player.maxLife;
+     if (checkPoint != CheckPoint.POINT3) {
+       checkPoint = CheckPoint.POINT3;
+       saveToFile();
+     }
    }
   
 }
 
 void saveToFile() {
   json = new JSONObject();
-  json.setInt("checkPoint", checkPointToInt());
-  json.setBoolean("cutScene1Complete", dialogue.cutScene1Complete);
-  json.setBoolean("cutScene2Complete", dialogue.cutScene2Complete);
-  json.setBoolean("cutScene3Complete", dialogue.cutScene3Complete);
-  json.setBoolean("cutScene4Complete", dialogue.cutScene4Complete);
+  if (!dialogue.cutScene4Complete) {
+    json.setInt("checkPoint", checkPointToInt());
+    json.setInt("lastEnding", lastEnding);
+    json.setBoolean("cutScene1Complete", dialogue.cutScene1Complete);
+    json.setBoolean("cutScene2Complete", dialogue.cutScene2Complete);
+    json.setBoolean("cutScene3Complete", dialogue.cutScene3Complete);
+  } else {
+    json.setInt("checkPoint", 0);
+    json.setInt("lastEnding", lastEnding);
+    json.setBoolean("cutScene1Complete", false);
+    json.setBoolean("cutScene2Complete", false);
+    json.setBoolean("cutScene3Complete", false);
+  }
+  
+  //json.setBoolean("cutScene4Complete", dialogue.cutScene4Complete);
   saveJSONObject(json, "data/save.json");
 }
 
@@ -191,10 +241,11 @@ void loadFromFile() {
     if (f.exists()) {
       json = loadJSONObject(dataPath("save.json"));
       checkPoint = intToCheckPoint(json.getInt("checkPoint"));
+      lastEnding = json.getInt("lastEnding");
       dialogue.cutScene1Complete = (json.getBoolean("cutScene1Complete"));
       dialogue.cutScene2Complete = (json.getBoolean("cutScene2Complete"));
       dialogue.cutScene3Complete = (json.getBoolean("cutScene3Complete"));
-      dialogue.cutScene4Complete = (json.getBoolean("cutScene4Complete"));
+      //dialogue.cutScene4Complete = (json.getBoolean("cutScene4Complete"));
     } else {
       checkPoint = CheckPoint.START;
  
