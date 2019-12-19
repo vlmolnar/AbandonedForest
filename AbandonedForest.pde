@@ -123,9 +123,9 @@ void draw() {
     else if(lastEnding == 2) background(titleImg2);
     fill(252, 154, 8);
     textSize(40);
-    text("Press SPACE to start game", width/2 + 200, height/2);
+    text("Press ENTER to start game", width/2 + 200, height/2);
     fill(0);
-    if (pressed[32]) {
+    if (pressed[ENTER] || pressed[RETURN]) {
       gameState = GameState.GAME;
     }
   }
