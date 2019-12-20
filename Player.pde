@@ -196,7 +196,7 @@ class Player{
         lives -= 1;
         
         // Death
-        if (lives == 0) {
+        if (lives == 0 && maxLife != 0) {
           lastDamageTime = 0;
           if (gravity > 0) {
             reverseGravity();
@@ -220,6 +220,7 @@ class Player{
    
    image(foxImg, this.position.x, this.position.y);
    PVector dungeonCorner = new PVector(dungeon.getRoom(position).loc.x - width/2, dungeon.getRoom(position).loc.y + height/2 - GRID_SQUARE);
+   if (maxLife == 0) return;
    for (int i = 0; i < maxLife; i++) {
      if (i < lives) {
        image(life, dungeonCorner.x + i * GRID_SQUARE, dungeonCorner.y);

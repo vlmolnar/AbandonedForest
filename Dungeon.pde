@@ -105,11 +105,20 @@ class Dungeon {
     checkpoint = Coord.add(checkpoint, new Coord(1, 0));
     rooms.put(checkpoint, new Room(map7));
     
+    r = new Room(map8);
     curr = Coord.add(checkpoint, new Coord(1, 0));
-    rooms.put(curr, new Room(map8));
+    rooms.put(curr, r);
+    for (int i = 0; i < 10; i++) {
+       r.rain.add(new RainDrop(4900, 5900)); 
+    }
     
+    r = new Room(map9);
     curr = Coord.add(curr, new Coord(1, 0));
-    rooms.put(curr, new Room(map9));
+    rooms.put(curr, r);
+    
+    for (int i = 0; i < 10; i++) {
+       r.rain.add(new RainDrop(6700, 7700)); 
+    }
     
     curr = Coord.add(curr, new Coord(0, -1));
     rooms.put(curr, new Room(map10));
@@ -153,9 +162,7 @@ class Dungeon {
       // Get key and value from entry.
       Coord coord = entry.getKey();
       Room room = entry.getValue();
-
-      // Set fill color, location and half scale.
-      room.fill = color(213, 213, 213);
+      
     //  room.fill = lerpColor(
     //    0xffef3f3f, 0xff3f3fef,
     //    rng.nextFloat(), HSB);

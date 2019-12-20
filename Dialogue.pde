@@ -127,6 +127,9 @@ class Dialogue {
         player.maxLife -= 1;
         player.lives = player.maxLife;
         script.remove(0);
+        if (!cutScene2Complete) fill = color(167, 167, 167);
+        else if (!cutScene3Complete) fill = color(148, 148, 148);
+        else fill = color(75, 75, 75);
       }
       if (script.isEmpty()) {
         if (!cutScene1Complete) cutScene1Complete = true;
@@ -274,6 +277,7 @@ void fillEndingSacrifice() {
   script.add(new ScriptSpeak(Speaker.FOX, "Thank you for seeing my journey through the end. I may not remember it, but I hope you will."));
   script.add(new ScriptSpeak(Speaker.FOX, "With the last remnant of my sanity, I sacrifice my soul to the Forest!"));
   //Sacrifice
+  script.add(new ScriptSpeak(Speaker.NARRATOR, "sacrifice"));
   script.add(new ScriptSpeak(Speaker.NARRATOR, "\nYou sacrificed your soul to the Forest"));
   script.add(new ScriptSpeak(Speaker.NARRATOR, "\nYou lost the ability to move"));
   script.add(new ScriptSpeak(Speaker.CROW, "Unbelievable! You passed all the trials of the Forest."));  

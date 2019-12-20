@@ -19,6 +19,7 @@ GameState gameState;
 PImage titleImg0, titleImg1, titleImg2;
 JSONObject json;
 int lastEnding = 0;  //0 indicates no ending, 1 Sacrifice and 2 Abandon
+color fill = color(213, 213, 213);
 
 void setup() {
   //fullScreen(P2D);
@@ -52,10 +53,11 @@ void newGameSetup() {
   dialogue = new Dialogue();
   
   loadFromFile();
+  fill = color(213, 213, 213);
   
   //checkPoint = CheckPoint.START;
   PVector startPos = checkPointCoord();
-  //player = new Player(3000, -3000, 0, 0);
+  //player = new Player(3000, -3000, 0, 0);  //Cheat to get to ending room
   player = new Player(startPos.x, startPos.y, 0, 0);
   
   titleImg0 = loadImage("title0.jpg");
@@ -66,11 +68,13 @@ void newGameSetup() {
     player.maxLife -= 1;
     player.lives = player.maxLife;
     player.gravitySacrificed = true;
+    fill = color(167, 167, 167);
   }
   if (dialogue.cutScene3Complete) {
     player.maxLife -= 1;
     player.lives = player.maxLife;
     player.dashSacrificed = true;
+    fill = color(148, 148, 148);
   }
   
   renderer = (PGraphics2D)g;
@@ -290,5 +294,5 @@ void keyReleased() {
 }
 
 void mouseReleased() {
-  dungeon.generate(width, height);
+  //dungeon.generate(width, height);
 }
