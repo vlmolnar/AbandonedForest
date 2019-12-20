@@ -1,9 +1,8 @@
 class Room {
   final PVector loc = new PVector(0.0, 0.0);
   PVector halfScale = new PVector(0.5, 0.5);
-  //color fill = 0xffffffff;
   int[][] grid;
-  PImage spikeUp,spikeDown, grass, tree, vine, crow, bg;
+  PImage spikeUp,spikeDown, grass, tree, vine, crow;
   ArrayList<Machinery> machines = new ArrayList();
   ArrayList<Bullet> bullets = new ArrayList();
   ArrayList<RainDrop> rain = new ArrayList();
@@ -16,7 +15,6 @@ class Room {
     tree = flipImgVertical(loadImage("tree.png"));
     vine = flipImgVertical(loadImage("vine.png"));
     crow = flipImgVertical(loadImage("crow.png"));
-    bg = loadImage("bg-img.jpg");
   }
   
   void addMachine(Machinery machine) {
@@ -32,7 +30,6 @@ class Room {
     r.vertex(loc.x + halfScale.x, loc.y + halfScale.y);
     r.vertex(loc.x - halfScale.x, loc.y + halfScale.y);
     r.endShape(CLOSE);
-    //image(bg, loc.x - halfScale.x, loc.y - halfScale.y);
     
     r.fill(0);
     
@@ -70,17 +67,7 @@ class Room {
       }
       
     for (RainDrop drop : rain) {
-      //System.out.println("size: " + rain.size());
       drop.draw(r);
     }
-
-    //r.fill(255, 255, 255);
-    //for (float i = loc.x - halfScale.x; i < loc.x + halfScale.x; i+=50) {
-    //  r.line(i,loc.y - halfScale.y, i, loc.y + halfScale.y);
-    //}
-    //for (float i = loc.y - halfScale.y; i < loc.y + halfScale.y; i+=50) {
-    //  r.line(loc.x - halfScale.x, i, loc.x + halfScale.x, i);
-    //}
-    //r.fill(fill);
   }
 }

@@ -1,10 +1,4 @@
 import java.util.*;
-//import ddf.minim.*;
-//Minim minim;
-//AudioPlayer music, jumpSFX, damageSFX; 
-
-//import processing.sound.*;
-//SoundFile file;
 
 int roomCount = 40;
 boolean[] pressed = new boolean[256];
@@ -22,8 +16,6 @@ int lastEnding = 0;  //0 indicates no ending, 1 Sacrifice and 2 Abandon
 color fill = color(213, 213, 213);
 
 void setup() {
-  //fullScreen(P2D);
-  //size(512, 256, P2D);
   size(1800, 1000, P2D);
   textureMode(NORMAL);
   textureWrap(REPEAT);
@@ -31,20 +23,7 @@ void setup() {
   gameState = GameState.TITLE;
   
   newGameSetup();
-  
-  //file = new SoundFile(this, "The Midnight Hour.mp3");
-  //file.play();
-  //file.loop();
-  
-  //minim = new Minim(this);
-  //music = minim.loadFile("The Midnight Hour.mp3");
-  //music.play();
-  //music.loop();
-  //int buffersize = 256;
-  //jumpSFX = minim.loadFile("swish.wav");
-  //jumpSFX.play();
-  //damageSFX = minim.loadFile("hurt.wav");
-  //damageSFX.play();
+
 }
 
 void newGameSetup() {
@@ -178,8 +157,6 @@ void drawGame() {
     cutSceneFind();
   }
   
-  //surface.setTitle(String.format("%.1f", frameRate));
-  
   // Uncomment for grid lattice
   //for (int i = -1 * (width/2); i < width/2; i+=50) {
   //  line(i, -1 * (height/2), i, height/2);
@@ -247,8 +224,7 @@ void saveToFile() {
     json.setBoolean("cutScene2Complete", false);
     json.setBoolean("cutScene3Complete", false);
   }
-  
-  //json.setBoolean("cutScene4Complete", dialogue.cutScene4Complete);
+
   saveJSONObject(json, "data/save.json");
 }
 

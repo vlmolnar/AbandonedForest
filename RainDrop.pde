@@ -30,9 +30,6 @@ class RainDrop {
   void draw(PGraphicsOpenGL r) {
     fall();
     fill(225);
-    //line(position.x, position.y, position.x + 500, position.y + 500);
-    //rect(position.x, position.y, 10, 10);
-    //ellipse(position.x, position.y, BULLET_DIAMETER, BULLET_DIAMETER);
     r.beginShape(QUADS);
     r.vertex(position.x - 1, position.y);
     r.vertex(position.x + 1, position.y);

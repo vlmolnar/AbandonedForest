@@ -165,7 +165,6 @@ class Dialogue {
   }
   
   void fillDialogue1 () {
-    //System.out.println("dialogue 1");
     script = new ArrayList<ScriptSpeak>();
     script.add(new ScriptSpeak(Speaker.CROW, "So my eyes did not betray me! It is not every day that this wretched place has visitors."));
     script.add(new ScriptSpeak(Speaker.FOX, "Greetings to you too!"));
@@ -183,7 +182,6 @@ class Dialogue {
 }
 
 void fillDialogue2() {
-  //System.out.println("dialogue 2");
   script = new ArrayList<ScriptSpeak>();
   script.add(new ScriptSpeak(Speaker.CROW, "Ah, so you found your way here! Impressive!"));
   script.add(new ScriptSpeak(Speaker.FOX, "It was a long journey… but I’ve reached the sacrifical tree at last."));
@@ -199,7 +197,7 @@ void fillDialogue2() {
   script.add(new ScriptSpeak(Speaker.CROW, "Go home while you still remember how, Little One!"));
   script.add(new ScriptSpeak(Speaker.FOX, "No! I will make the sacrifice!"));
   script.add(new ScriptSpeak(Speaker.NARRATOR, "sacrifice"));
-  //Sacrifice animation?
+  //Sacrifice
   script.add(new ScriptSpeak(Speaker.FOX, "What was that?"));
   script.add(new ScriptSpeak(Speaker.CROW, "The Forest has accepted your sacrifice. You gave your mind to save the land."));
   script.add(new ScriptSpeak(Speaker.FOX, "I gave… my mind? But how could that be when my thoughts are still clear?"));
@@ -221,8 +219,7 @@ void fillDialogue2() {
 }
 
 void fillDialogue3() {
-    //System.out.println("dialogue 3");
-    script = new ArrayList<ScriptSpeak>();
+  script = new ArrayList<ScriptSpeak>();
   script.add(new ScriptSpeak(Speaker.FOX, "At last, the tree!"));
   script.add(new ScriptSpeak(Speaker.CROW, "Took you long enough. I was just wondering if you dropped dead on the way!"));
   script.add(new ScriptSpeak(Speaker.CROW, "So, how does it feel to be without a mind?"));
@@ -249,7 +246,6 @@ void fillDialogue3() {
 }
 
 void fillDialogue4() {
-  //System.out.println("dialogue 4");
   script = new ArrayList<ScriptSpeak>();
   script.add(new ScriptSpeak(Speaker.FOX, "Here it is, where my journey comes to an end."));
   script.add(new ScriptSpeak(Speaker.FOX, "Are you there, Crow? I can’t see too well in this darkness…"));
@@ -259,7 +255,6 @@ void fillDialogue4() {
   script.add(new ScriptSpeak(Speaker.FOX, "No… my legs did not carry me. It was the Forest that guided me!"));
   script.add(new ScriptSpeak(Speaker.FOX, "I’m not the only one in pain. The Forest is the one screaming. The voices of all creatures, crying out in unison."));
   script.add(new ScriptSpeak(Speaker.FOX, "Is that what you wanted to show me, cruel Gods of the Forest?"));
-  //Room lights up
   script.add(new ScriptSpeak(Speaker.CROW, "Welcome to the final sacrifice, Little One. Many have been on the journey you took, but few made it this far."));
   script.add(new ScriptSpeak(Speaker.FOX, "What is this place? It’s dark and cold… hard to imagine anyone surviving here."));
   script.add(new ScriptSpeak(Speaker.CROW, "When the fires and machinery of the Old World made the surface uninhabitable, we didn’t have much choice but to move underground."));
@@ -285,7 +280,6 @@ void fillEndingSacrifice() {
   script.add(new ScriptSpeak(Speaker.FOX, "…"));
   script.add(new ScriptSpeak(Speaker.CROW, "Forgotten how to speak, have you? Losing your soul does take a toll on you. But do not fret, you won’t need one where you’re going."));
   script.add(new ScriptSpeak(Speaker.CROW, "You have honoured the promise your ancestors made to us, so we, Forest Gods shall honour your sacrifice. Let the Forest prosper, let it be your cradle. Have a peaceful eternal rest, Little One! "));
-  //Crows flock Fox, screen turns black
   lastEnding = 1;
 }
 
@@ -303,7 +297,6 @@ void fillEndingAbandon() {
   script.add(new ScriptSpeak(Speaker.FOX, "You’re not going to eat me?"));
   script.add(new ScriptSpeak(Speaker.CROW, "We are the Gods of the Forest. We have no business with the living and you’re clearly not ready to die."));
   script.add(new ScriptSpeak(Speaker.CROW, "Have a long life filled with struggles, Little One. And don’t forget what this Forest taught you."));
-  //Screen turns black
   lastEnding = 2;
 }
   

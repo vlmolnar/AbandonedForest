@@ -39,11 +39,4 @@ static class Coord implements Comparable < Coord > {
     return new Coord(a.x + b.x, a.y + b.y);
   }
 
-  // static Coord random(Random rng) {
-  //  float r = rng.nextFloat();
-  //  if (r < 0.25) { return new Coord(0, -1); }
-  //  if (r < 0.5) { return new Coord(-1, 0); }
-  //  if (r < 0.75) { return new Coord(0, 1); }
-  //  return new Coord(1, 0);
-  //}
 }

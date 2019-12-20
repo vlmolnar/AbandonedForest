@@ -132,13 +132,11 @@ class Player{
    
    //gravity
    if ( !collisionCheck(new PVector(position.x, position.y + gravity)) && millis() - lastDashTime > 200) {
-     //System.out.println("gravity yey");
      isOnGround = false;
      this.velocity.add(0, gravity);
      this.position = new PVector(position.x, position.y + gravity);
    } else {
      isOnGround = true;
-     //System.out.println("gravity nay");
    }
  }
  

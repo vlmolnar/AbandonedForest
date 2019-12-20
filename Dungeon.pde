@@ -73,34 +73,16 @@ class Dungeon {
     r.addMachine(new Machinery(new PVector(1000, 1200)));
     r.addMachine(new Machinery(new PVector(2250, 1400)));
     
-    //curr = Coord.add(curr, new Coord(0, 1));
-    //rooms.put(curr, new Room(map4));
-    
     r = new Room(map5);
     curr = Coord.add(curr, new Coord(1, 1));
     rooms.put(curr, new Room(map5));
-    //r.addMachine(new Machinery(new PVector(2800, 1500)));
-    //r.addMachine(new Machinery(new PVector(2700, 1000)));
-    //r.addMachine(new Machinery(new PVector(3600, 2200)));
-    //r.addMachine(new Machinery(new PVector(2250, 1200)));
     
     r = new Room(map6);
     curr = Coord.add(curr, new Coord(0, -1));
     rooms.put(curr, r);
     r.addMachine(new Machinery(new PVector(2900, 1400)));
     r.addMachine(new Machinery(new PVector(4400, 1400)));
-    //r.addMachine(new Machinery(new PVector(2700, 1000)));
-    
-    //curr = Coord.add(curr, new Coord(1, 0));
-    //rooms.put(curr, new Room(map0));
-    
-    //curr = Coord.add(curr, new Coord(0, 1));
-    //rooms.put(curr, new Room(map0));
-    
-    //curr = Coord.add(curr, new Coord(1, 1));
-    //rooms.put(curr, new Room(map7));
-    
-    
+
     // Rooms for sacrifice 2
     checkpoint = Coord.add(checkpoint, new Coord(1, 0));
     rooms.put(checkpoint, new Room(map7));
@@ -122,9 +104,6 @@ class Dungeon {
     
     curr = Coord.add(curr, new Coord(0, -1));
     rooms.put(curr, new Room(map10));
-    
-    //curr = Coord.add(curr, new Coord(1, 0));
-    //rooms.put(curr, new Room(map0));
     
     //Rooms for sacrifice 3
     curr = Coord.add(checkpoint, new Coord(0, -1));
@@ -162,10 +141,7 @@ class Dungeon {
       // Get key and value from entry.
       Coord coord = entry.getKey();
       Room room = entry.getValue();
-      
-    //  room.fill = lerpColor(
-    //    0xffef3f3f, 0xff3f3fef,
-    //    rng.nextFloat(), HSB);
+
       room.loc.set(coord.x * w, coord.y * h);
       room.halfScale.set(halfw, halfh);
     }
@@ -181,10 +157,5 @@ class Dungeon {
       round(in.y * invDim.y));
       
       return rooms.containsKey(coord) ? rooms.get(coord) : null;
-
-    // To simplify the example, the dungeon
-    // returns its starting room when the
-    // coordinate supplied is not in the map.
-    //return rooms.getOrDefault(coord, start);
   }
 }

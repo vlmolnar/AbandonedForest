@@ -7,7 +7,6 @@ class Bullet {
   Bullet(PVector position, PVector velocity) {
      this.position = position;
      this.velocity = velocity;
-     //this.lockOn = lockOn;
   }
   
   void move() {
