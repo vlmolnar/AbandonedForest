@@ -6,16 +6,21 @@ class Machinery {
     this.position = position;
   }
   
-  void shoot() {
+  void shoot(ArrayList<Bullet> bullets) {
     int currentTime = millis();
-    if (currentTime > lastShotTime + 1500) {
-      
+    if (currentTime > lastShotTime + 3500 && position.dist(player.position) < 600) {
+      PVector vel = new PVector((player.position.x - position.x), (player.position.y - position.y) );
+      vel = vel.normalize().setMag(3);
+      bullets.add(new Bullet(new PVector(position.x, position.y), vel));
+      lastShotTime = millis();
     }
      
     
   }
   
-  void draw() {
-    
+  void draw(ArrayList<Bullet> bullets) {
+    shoot(bullets);
+    fill(0);
+    ellipse(position.x, position.y, 50, 50);
   }
 }

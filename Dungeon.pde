@@ -60,65 +60,78 @@ class Dungeon {
     // To store dungeon minimums and maximums.
     int minx = 0; int miny = 0;
     int maxx = 0; int maxy = 0;
+    Room r;
       
-      // Once a unique coordinate is set, add new room.
-      checkpoint = Coord.add(checkpoint, new Coord(1, 0));
-      rooms.put(checkpoint, new Room(map2));
-      
-      //Rooms for sacrifice 1
-      curr = Coord.add(checkpoint, new Coord(0, 1));
-      rooms.put(curr, new Room(map3));
-      
-      curr = Coord.add(curr, new Coord(0, 1));
-      rooms.put(curr, new Room(map4));
-      
-      curr = Coord.add(curr, new Coord(1, 0));
-      rooms.put(curr, new Room(map5));
-      
-      curr = Coord.add(curr, new Coord(0, -1));
-      rooms.put(curr, new Room(map6));
-      
-      //curr = Coord.add(curr, new Coord(1, 0));
-      //rooms.put(curr, new Room(map0));
-      
-      //curr = Coord.add(curr, new Coord(0, 1));
-      //rooms.put(curr, new Room(map0));
-      
-      //curr = Coord.add(curr, new Coord(1, 1));
-      //rooms.put(curr, new Room(map7));
-      
-      
-      // Rooms for sacrifice 2
-      checkpoint = Coord.add(checkpoint, new Coord(1, 0));
-      rooms.put(checkpoint, new Room(map7));
-      
-      curr = Coord.add(checkpoint, new Coord(1, 0));
-      rooms.put(curr, new Room(map8));
-      
-      curr = Coord.add(curr, new Coord(1, 0));
-      rooms.put(curr, new Room(map9));
-      
-      curr = Coord.add(curr, new Coord(0, -1));
-      rooms.put(curr, new Room(map10));
-      
-      //curr = Coord.add(curr, new Coord(1, 0));
-      //rooms.put(curr, new Room(map0));
-      
-      //Rooms for sacrifice 3
-      curr = Coord.add(checkpoint, new Coord(0, -1));
-      rooms.put(curr, new Room(map11));
-      
-      curr = Coord.add(curr, new Coord(0, -1));
-      rooms.put(curr, new Room(map12));
-      
-      curr = Coord.add(curr, new Coord(0, -1));
-      rooms.put(curr, new Room(map13));
+    checkpoint = Coord.add(checkpoint, new Coord(1, 0));
+    rooms.put(checkpoint, new Room(map2));
+    
+    //Rooms for sacrifice 1
+    r = new Room(map3);
+    curr = Coord.add(checkpoint, new Coord(0, 1));
+    rooms.put(curr, r);
+    r.addMachine(new Machinery(new PVector(2000, 875)));
+    r.addMachine(new Machinery(new PVector(1000, 1200)));
+    r.addMachine(new Machinery(new PVector(2250, 1400)));
+    
+    //curr = Coord.add(curr, new Coord(0, 1));
+    //rooms.put(curr, new Room(map4));
+    
+    r = new Room(map5);
+    curr = Coord.add(curr, new Coord(1, 1));
+    rooms.put(curr, new Room(map5));
+    //r.addMachine(new Machinery(new PVector(2800, 1500)));
+    //r.addMachine(new Machinery(new PVector(2700, 1000)));
+    //r.addMachine(new Machinery(new PVector(3600, 2200)));
+    //r.addMachine(new Machinery(new PVector(2250, 1200)));
+    
+    r = new Room(map6);
+    curr = Coord.add(curr, new Coord(0, -1));
+    rooms.put(curr, r);
+    r.addMachine(new Machinery(new PVector(2900, 1400)));
+    r.addMachine(new Machinery(new PVector(4400, 1400)));
+    //r.addMachine(new Machinery(new PVector(2700, 1000)));
+    
+    //curr = Coord.add(curr, new Coord(1, 0));
+    //rooms.put(curr, new Room(map0));
+    
+    //curr = Coord.add(curr, new Coord(0, 1));
+    //rooms.put(curr, new Room(map0));
+    
+    //curr = Coord.add(curr, new Coord(1, 1));
+    //rooms.put(curr, new Room(map7));
+    
+    
+    // Rooms for sacrifice 2
+    checkpoint = Coord.add(checkpoint, new Coord(1, 0));
+    rooms.put(checkpoint, new Room(map7));
+    
+    curr = Coord.add(checkpoint, new Coord(1, 0));
+    rooms.put(curr, new Room(map8));
+    
+    curr = Coord.add(curr, new Coord(1, 0));
+    rooms.put(curr, new Room(map9));
+    
+    curr = Coord.add(curr, new Coord(0, -1));
+    rooms.put(curr, new Room(map10));
+    
+    //curr = Coord.add(curr, new Coord(1, 0));
+    //rooms.put(curr, new Room(map0));
+    
+    //Rooms for sacrifice 3
+    curr = Coord.add(checkpoint, new Coord(0, -1));
+    rooms.put(curr, new Room(map11));
+    
+    curr = Coord.add(curr, new Coord(0, -1));
+    rooms.put(curr, new Room(map12));
+    
+    curr = Coord.add(curr, new Coord(0, -1));
+    rooms.put(curr, new Room(map13));
 
-      // Update min and max coordinates.
-      minx = min(minx, curr.x);
-      miny = min(miny, curr.y);
-      maxx = max(maxx, curr.x);
-      maxy = max(maxy, curr.y);
+    // Update min and max coordinates.
+    minx = min(minx, curr.x);
+    miny = min(miny, curr.y);
+    maxx = max(maxx, curr.x);
+    maxy = max(maxy, curr.y);
     //}
 
     // Set room dimensions. invDim will be used to find

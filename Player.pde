@@ -178,7 +178,20 @@ class Player{
      foxImg.filter(INVERT);
    }
    if (room.grid[gridY][gridX] == 2 || room.grid[gridY][gridX] == 3) {  // Damage
-      if (millis() - lastDamageTime > 2000) {
+     takeDamage();
+      return true;
+   }
+   // Wall
+   if (room.grid[gridY][gridX] == 1 
+     || (!dialogue.cutScene2Complete && room.grid[gridY][gridX] == 5) 
+     || (!dialogue.cutScene3Complete && room.grid[gridY][gridX] == 6)) {
+     return true;
+   }
+   return false;
+ }
+ 
+ void takeDamage() {
+   if (millis() - lastDamageTime > 2000) {
         lastDamageTime = millis();
         lives -= 1;
         
@@ -196,15 +209,6 @@ class Player{
           foxImg.filter(INVERT);
         }
       }
-     return true;
-   }
-   // Wall
-   if (room.grid[gridY][gridX] == 1 
-     || (!dialogue.cutScene2Complete && room.grid[gridY][gridX] == 5) 
-     || (!dialogue.cutScene3Complete && room.grid[gridY][gridX] == 6)) {
-     return true;
-   }
-   return false;
  }
 
 

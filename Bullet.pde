@@ -4,8 +4,9 @@ class Bullet {
   boolean hasExploded = false;
   //boolean lockOn;
   
-  Bullet(PVector position) {
+  Bullet(PVector position, PVector velocity) {
      this.position = position;
+     this.velocity = velocity;
      //this.lockOn = lockOn;
   }
   
@@ -28,14 +29,24 @@ class Bullet {
     if (gridX < 0) gridX = 0;
     if (gridY < 0) gridY = 0;
    
-    if (room.grid[gridY][gridX] == 1 || room.grid[gridY][gridX] == 2 || room.grid[gridY][gridX] == 3) {
+    if (playerCollision() || room.grid[gridY][gridX] == 1 || room.grid[gridY][gridX] == 2 || room.grid[gridY][gridX] == 3) {
       hasExploded = true;
      return true;
     }
     return false;
   }
   
+  boolean playerCollision() {
+    if (player.position.x < position.x && player.position.x + player.foxImg.width > position.x 
+        && player.position.y < position.y && player.position.y + player.foxImg.height > position.y) {
+          player.takeDamage();
+          return true;
+        }
+    return false;
+  }
+  
   void draw() {
+    move();
     fill(0);
     ellipse(position.x, position.y, BULLET_DIAMETER, BULLET_DIAMETER);
   }

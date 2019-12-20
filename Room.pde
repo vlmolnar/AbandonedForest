@@ -3,7 +3,9 @@ class Room {
   PVector halfScale = new PVector(0.5, 0.5);
   color fill = 0xffffffff;
   int[][] grid;
-  PImage spikeUp,spikeDown, grass, tree, vine;
+  PImage spikeUp,spikeDown, grass, tree, vine, crow;
+  ArrayList<Machinery> machines = new ArrayList();
+  ArrayList<Bullet> bullets = new ArrayList();
   
   Room(int[][] map) {
     grid = map;
@@ -12,15 +14,13 @@ class Room {
     grass = flipImgVertical(loadImage("grass.png"));
     tree = flipImgVertical(loadImage("tree.png"));
     vine = flipImgVertical(loadImage("vine.png"));
+    crow = flipImgVertical(loadImage("crow.png"));
   }
   
-  PImage flipImgVertical(PImage img) {
-   PImage flipped = createImage(img.width, img.height, ARGB);
-   for(int y = 0 ; y < flipped.height; y++) {
-      flipped.set(0, flipped.height-y-1, img.get(0, y, img.width, 1));
-    }
-    return flipped;
- }
+  void addMachine(Machinery machine) {
+      machines.add(machine);
+  }
+  
   
   void drawRoom(PGraphicsOpenGL r) {
     r.beginShape(QUADS);
@@ -31,30 +31,12 @@ class Room {
     r.vertex(loc.x - halfScale.x, loc.y + halfScale.y);
     r.endShape(CLOSE);
     
-    //r.fill(255,255,255);
-    //r.square(loc.x, loc.y , 50);
-    
-    //r.beginShape(QUADS);
-    //r.fill(255, 255, 255);
-    //r.vertex(loc.x - halfScale.x, loc.y + halfScale.y);
-    //r.vertex(loc.x - halfScale.x + GRID_SQUARE, loc.y + halfScale.y);
-    //r.vertex(loc.x - halfScale.x + GRID_SQUARE, loc.y + halfScale.y - GRID_SQUARE);
-    //r.vertex(loc.x - halfScale.x, loc.y + halfScale.y - GRID_SQUARE);
-    //r.endShape(CLOSE);
-    
     r.fill(0);
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid[0].length; j++) {
         if (grid[i][j] == 0) {
           continue;
         } else if (grid[i][j] == 1) {
-          //r.square(loc.x - halfScale.x + i * GRID_SQUARE, loc.y - halfScale.y + j * GRID_SQUARE, GRID_SQUARE);
-          //r.beginShape(QUADS);
-          //r.vertex(loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE);
-          //r.vertex(loc.x - halfScale.x + j * GRID_SQUARE + GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE);
-          //r.vertex(loc.x - halfScale.x + j * GRID_SQUARE + GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
-          //r.vertex(loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
-          //r.endShape(CLOSE);
           image(grass, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
         } else if (grid[i][j] == 2) { // Upwards pointing spike
           image(spikeUp, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
@@ -66,9 +48,22 @@ class Room {
           image(vine, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
         } else if (grid[i][j] == 6 && !dialogue.cutScene3Complete) { //Progress block until second sacrifice
           image(vine, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
+        } else if (grid[i][j] == 7) { //Crow onlooker, facing left
+          image(crow, loc.x - halfScale.x + j * GRID_SQUARE, loc.y + halfScale.y - i * GRID_SQUARE - GRID_SQUARE);
         }
       }
     }
+    
+    for (Machinery m : machines) {
+      m.draw(bullets);
+    }
+    
+    Iterator<Bullet> itr = bullets.iterator();
+      while (itr.hasNext()) {
+        Bullet b = itr.next();
+        if (b.hasExploded) itr.remove();
+        else b.draw(); 
+      }
 
     //r.fill(255, 255, 255);
     for (float i = loc.x - halfScale.x; i < loc.x + halfScale.x; i+=50) {

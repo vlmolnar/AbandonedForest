@@ -1,7 +1,7 @@
 {
   "lastEnding": 0,
   "cutScene3Complete": false,
-  "cutScene1Complete": false,
-  "cutScene2Complete": false,
-  "checkPoint": 1
+  "cutScene1Complete": true,
+  "cutScene2Complete": true,
+  "checkPoint": 2
 }

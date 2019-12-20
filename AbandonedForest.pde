@@ -1,7 +1,10 @@
-import ddf.minim.*;
-Minim minim;
+import java.util.*;
+//import ddf.minim.*;
+//Minim minim;
+//AudioPlayer music, jumpSFX, damageSFX; 
 
-AudioPlayer music, jumpSFX, damageSFX; 
+//import processing.sound.*;
+//SoundFile file;
 
 int roomCount = 40;
 boolean[] pressed = new boolean[256];
@@ -28,9 +31,13 @@ void setup() {
   
   newGameSetup();
   
+  //file = new SoundFile(this, "The Midnight Hour.mp3");
+  //file.play();
+  //file.loop();
   
-  minim = new Minim(this);
+  //minim = new Minim(this);
   //music = minim.loadFile("The Midnight Hour.mp3");
+  //music.play();
   //music.loop();
   //int buffersize = 256;
   //jumpSFX = minim.loadFile("swish.wav");
